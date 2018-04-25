@@ -8,13 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		6235C5692090BFED007053AE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5682090BFED007053AE /* AppDelegate.m */; };
-		6235C56C2090BFED007053AE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C56B2090BFED007053AE /* ViewController.m */; };
+		6235C56C2090BFED007053AE /* BLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C56B2090BFED007053AE /* BLViewController.m */; };
 		6235C56F2090BFED007053AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6235C56D2090BFED007053AE /* Main.storyboard */; };
 		6235C5712090BFEE007053AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6235C5702090BFEE007053AE /* Assets.xcassets */; };
 		6235C5742090BFEE007053AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6235C5722090BFEE007053AE /* LaunchScreen.storyboard */; };
 		6235C5772090BFEE007053AE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5762090BFEE007053AE /* main.m */; };
 		6235C5812090BFEE007053AE /* BusyLifeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5802090BFEE007053AE /* BusyLifeTests.m */; };
 		6235C58C2090BFEE007053AE /* BusyLifeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C58B2090BFEE007053AE /* BusyLifeUITests.m */; };
+		6235C59C2090C049007053AE /* UIView+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C59B2090C049007053AE /* UIView+Common.m */; };
+		6235C5A22090CCBB007053AE /* BLScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C59E2090CCBB007053AE /* BLScrollView.m */; };
+		6235C5A32090CCBB007053AE /* BLCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5A12090CCBB007053AE /* BLCellView.m */; };
+		6235C5A82090CCC3007053AE /* BLNumberCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5A62090CCC2007053AE /* BLNumberCellView.m */; };
+		6235C5A92090CCC3007053AE /* BLNumberInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5A72090CCC3007053AE /* BLNumberInfo.m */; };
+		6235C5AD2090CEDF007053AE /* BLCellInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5AC2090CEDF007053AE /* BLCellInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,8 +44,8 @@
 		6235C5642090BFED007053AE /* BusyLife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusyLife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6235C5672090BFED007053AE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6235C5682090BFED007053AE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		6235C56A2090BFED007053AE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		6235C56B2090BFED007053AE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		6235C56A2090BFED007053AE /* BLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLViewController.h; sourceTree = "<group>"; };
+		6235C56B2090BFED007053AE /* BLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLViewController.m; sourceTree = "<group>"; };
 		6235C56E2090BFED007053AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6235C5702090BFEE007053AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6235C5732090BFEE007053AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +57,18 @@
 		6235C5872090BFEE007053AE /* BusyLifeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BusyLifeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6235C58B2090BFEE007053AE /* BusyLifeUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BusyLifeUITests.m; sourceTree = "<group>"; };
 		6235C58D2090BFEE007053AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6235C59A2090C049007053AE /* UIView+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Common.h"; sourceTree = "<group>"; };
+		6235C59B2090C049007053AE /* UIView+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Common.m"; sourceTree = "<group>"; };
+		6235C59E2090CCBB007053AE /* BLScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLScrollView.m; sourceTree = "<group>"; };
+		6235C59F2090CCBB007053AE /* BLCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLCellView.h; sourceTree = "<group>"; };
+		6235C5A02090CCBB007053AE /* BLScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLScrollView.h; sourceTree = "<group>"; };
+		6235C5A12090CCBB007053AE /* BLCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLCellView.m; sourceTree = "<group>"; };
+		6235C5A52090CCC2007053AE /* BLNumberInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLNumberInfo.h; sourceTree = "<group>"; };
+		6235C5A62090CCC2007053AE /* BLNumberCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLNumberCellView.m; sourceTree = "<group>"; };
+		6235C5A72090CCC3007053AE /* BLNumberInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLNumberInfo.m; sourceTree = "<group>"; };
+		6235C5AA2090CDC9007053AE /* BLNumberCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLNumberCellView.h; sourceTree = "<group>"; };
+		6235C5AB2090CEDF007053AE /* BLCellInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLCellInfo.h; sourceTree = "<group>"; };
+		6235C5AC2090CEDF007053AE /* BLCellInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLCellInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,10 +119,12 @@
 		6235C5662090BFED007053AE /* BusyLife */ = {
 			isa = PBXGroup;
 			children = (
+				6235C59D2090C0BB007053AE /* BLScrollView */,
+				6235C5992090C032007053AE /* Category */,
 				6235C5672090BFED007053AE /* AppDelegate.h */,
 				6235C5682090BFED007053AE /* AppDelegate.m */,
-				6235C56A2090BFED007053AE /* ViewController.h */,
-				6235C56B2090BFED007053AE /* ViewController.m */,
+				6235C56A2090BFED007053AE /* BLViewController.h */,
+				6235C56B2090BFED007053AE /* BLViewController.m */,
 				6235C56D2090BFED007053AE /* Main.storyboard */,
 				6235C5702090BFEE007053AE /* Assets.xcassets */,
 				6235C5722090BFEE007053AE /* LaunchScreen.storyboard */,
@@ -130,6 +150,32 @@
 				6235C58D2090BFEE007053AE /* Info.plist */,
 			);
 			path = BusyLifeUITests;
+			sourceTree = "<group>";
+		};
+		6235C5992090C032007053AE /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				6235C59A2090C049007053AE /* UIView+Common.h */,
+				6235C59B2090C049007053AE /* UIView+Common.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		6235C59D2090C0BB007053AE /* BLScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				6235C5AA2090CDC9007053AE /* BLNumberCellView.h */,
+				6235C5A62090CCC2007053AE /* BLNumberCellView.m */,
+				6235C5A52090CCC2007053AE /* BLNumberInfo.h */,
+				6235C5A72090CCC3007053AE /* BLNumberInfo.m */,
+				6235C5A02090CCBB007053AE /* BLScrollView.h */,
+				6235C59E2090CCBB007053AE /* BLScrollView.m */,
+				6235C59F2090CCBB007053AE /* BLCellView.h */,
+				6235C5A12090CCBB007053AE /* BLCellView.m */,
+				6235C5AB2090CEDF007053AE /* BLCellInfo.h */,
+				6235C5AC2090CEDF007053AE /* BLCellInfo.m */,
+			);
+			path = BLScrollView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,9 +308,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6235C56C2090BFED007053AE /* ViewController.m in Sources */,
+				6235C56C2090BFED007053AE /* BLViewController.m in Sources */,
+				6235C5A22090CCBB007053AE /* BLScrollView.m in Sources */,
+				6235C5A82090CCC3007053AE /* BLNumberCellView.m in Sources */,
+				6235C5A92090CCC3007053AE /* BLNumberInfo.m in Sources */,
 				6235C5772090BFEE007053AE /* main.m in Sources */,
+				6235C5A32090CCBB007053AE /* BLCellView.m in Sources */,
 				6235C5692090BFED007053AE /* AppDelegate.m in Sources */,
+				6235C5AD2090CEDF007053AE /* BLCellInfo.m in Sources */,
+				6235C59C2090C049007053AE /* UIView+Common.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
