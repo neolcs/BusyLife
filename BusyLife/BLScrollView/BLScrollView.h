@@ -8,21 +8,24 @@
 
 #import <UIKit/UIKit.h>
 #import "BLCellView.h"
-#import "BLCellInfo.h"
+#import "BLSectionInfo.h"
+#import "BLSectionView.h"
 
-@protocol BLScrollViewDelegate
+@class BLScrollView;
+@protocol BLScrollViewDelegate<NSObject>
 
-- (void)cellWillBeRemoved:(BLCellView *)cell;       //Called when the cell is out of the visible rect, hence is remove from BLScrollView
+- (void)cellWillBeRemoved:(BLCellView *)cell;       //called when the cell is out of the visible rect, hence is remove from BLScrollView
 
 @end
 
-@protocol BLScrollViewDataSource
+@protocol BLScrollViewDataSource<NSObject>
 
-- (BLCellView *)cellForInfo:(BLCellInfo *)cellInfo;     //Should return the correspond BLCellView for the cellInfo, this method is required
+//implement this method to return a CellView with the info from cellInfo
+- (BLCellView *)scrollView:(BLScrollView *)scrollView cellForInfo:(BLCellInfo *)cellInfo;
 
-//TODO
 @optional
-- (UIView *)headerForInfo:(BLCellInfo *)cellInfo;       //Return the header view for the cell info, optional
+//return the header view for the cell info, optional to implement, if not implement, there would be no header
+- (UIView *)scrollView:(BLScrollView *)scrollView headerForInfo:(BLSectionInfo *)cellInfo;
 
 @end
 
@@ -33,9 +36,10 @@
 
 //Since BLScrollView could scroll up and down infinitely, the indexPath is not valid here, we use the topCellInfo as the anchor for current state
 //The topCellInfo must be set, or nothing would show up
-@property (nonatomic, strong) BLCellInfo* topCellInfo;
+@property (nonatomic, strong) BLSectionInfo* topSectionInfo;
 
 //Similar to UITableView, when topCellInfo is changed or view size change is changed, call this method to reload data
 - (void)reloadData;
+- (BLSectionView *)sectionViewFor:(BLSectionInfo *)sectionInfo;
 
 @end

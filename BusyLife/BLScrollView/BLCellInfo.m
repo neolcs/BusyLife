@@ -20,4 +20,9 @@
     return nil;
 }
 
+- (NSString *)sectionKey{
+    NSAssert(false, @"BLCellInfo sectionKey should be override in subclass");
+    return @"";
+}
+
 @end

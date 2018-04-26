@@ -13,5 +13,6 @@
 
 - (BLCellInfo *)previous;
 - (BLCellInfo *)next;
+- (NSString *)sectionKey;
 
 @end

@@ -17,8 +17,6 @@
 
 @implementation BLNumberCellView
 
-@synthesize cellInfo = _cellInfo;
-
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
@@ -32,7 +30,7 @@
 }
 
 - (void)setCellInfo:(BLNumberInfo *)cellInfo{
-    _cellInfo = cellInfo;
+    [super setCellInfo:cellInfo];
     self.infoLabel.text = [NSString stringWithFormat:@"%ld", cellInfo.num];
 }
 

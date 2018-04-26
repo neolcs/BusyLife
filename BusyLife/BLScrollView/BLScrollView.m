@@ -9,12 +9,17 @@
 #import "BLScrollView.h"
 #import "UIView+Common.h"
 
+#define BLINITIALSPEED  (40)
+
 @interface BLScrollView()
 
 @property (nonatomic, strong) dispatch_source_t timer;
 @property (nonatomic, assign) BOOL isDecelerating;
 @property (nonatomic, assign) CGPoint velocity;
-@property (nonatomic, strong) NSMutableArray* inuseCellArray;
+@property (nonatomic, strong) NSMutableArray* sectionViewArray;
+@property (nonatomic, strong) NSMutableDictionary* sectionViewDict;
+
+//TODO: make use of backupCellArray 
 @property (nonatomic, strong) NSMutableArray* backupCellArray;
 
 - (void)_setup;
@@ -22,8 +27,8 @@
 - (void)_resumeTimer;
 - (void)_suspendTimer;
 
-- (void)_pushCell:(UIView *)cell;
-- (void)_enqueueCell:(UIView *)cell;
+- (void)_pushSection:(BLSectionView *)cell;
+- (void)_enqueueSection:(BLSectionView *)cell;
 
 - (void)_panMe:(UIPanGestureRecognizer *)pan;
 - (void)_translateView:(CGPoint)point;
@@ -41,26 +46,55 @@
 }
 
 - (void)reloadData {
-    for (UIView* subView in self.inuseCellArray){
+    for (UIView* subView in self.sectionViewArray){
         [subView removeFromSuperview];
     }
-    [self.inuseCellArray removeAllObjects];
+    [self.sectionViewArray removeAllObjects];
     
-    if (!self.topCellInfo) return;
+    if (!self.topSectionInfo) return;
     
-    BLCellInfo* current = self.topCellInfo;
-    BLCellView* cellView = [self.dataSource cellForInfo:current];
-    [self _pushCell:cellView];
-    while (cellView.bottom < self.height) {
+    BLSectionInfo* current = self.topSectionInfo;
+    
+    BLSectionView* sectionView = [self sectionViewFor:current];
+    [self _pushSection:sectionView];
+    while (sectionView.bottom < self.height) {
         current = [current next];
-        cellView = [self.dataSource cellForInfo:current];
-        [self _pushCell:cellView];
+        sectionView = [self sectionViewFor:current];
+        [self _pushSection:sectionView];
     }
+}
+
+- (BLSectionView *)sectionViewFor:(BLSectionInfo *)sectionInfo{
+    if (nil == sectionInfo) {
+        return nil;
+    }
+    BLSectionView* sectionView = [self.sectionViewDict objectForKey:sectionInfo];
+    if (sectionView) {
+        return sectionView;
+    }
+    sectionView = [[BLSectionView alloc] initWithFrame:CGRectZero];
+    sectionView.sectionInfo = sectionInfo;
+    if ([self.dataSource respondsToSelector:@selector(scrollView:headerForInfo:)]) {
+        UIView* header = [self.dataSource scrollView:self headerForInfo:sectionInfo];
+        if (header) {
+            [sectionView addSubview:header];
+            sectionView.header = header;
+        }
+    }
+    
+    for (BLCellInfo* cellInfo in sectionInfo.cellInfoArray){
+        BLCellView* cell = [self.dataSource scrollView:self cellForInfo:cellInfo];
+        [sectionView addSubview:cell];
+        [sectionView.cellArray addObject:cell];
+    }
+    [sectionView accomodateInSize:CGSizeMake(0, 10000)];
+    return sectionView;
 }
 
 #pragma mark - Private Method
 - (void)_setup {
-    self.inuseCellArray = [NSMutableArray array];
+    self.sectionViewArray = [NSMutableArray array];
+    self.sectionViewDict = [NSMutableDictionary dictionary];
     self.backupCellArray = [NSMutableArray array];
     UIPanGestureRecognizer* pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(_panMe:)];
     [self addGestureRecognizer:pan];
@@ -82,8 +116,8 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self _translateView:self.velocity];
         });
-        self.velocity = CGPointMake(self.velocity.x, self.velocity.y / 1.1);
-        NSLog(@"dispatch event handled. velocity x:%.2f, y:%.2f", self.velocity.x, self.velocity.y);
+        self.velocity = CGPointMake(self.velocity.x, self.velocity.y / 1.05);
+        NSLog(@"decelerate, velocity x:%.2f, y:%.2f", self.velocity.x, self.velocity.y);
     });
 }
 
@@ -104,45 +138,45 @@
 }
 
 #pragma mark - Cell Management
-- (void)_pushCell:(UIView *)cell {
-    if (!cell) return;
-    if ([self.inuseCellArray count] > 0){
-        UIView* lastCell = [self.inuseCellArray lastObject];
-        cell.top = lastCell.bottom;
+- (void)_pushSection:(BLSectionView *)sectionView {
+    if (!sectionView) return;
+    if ([self.sectionViewArray count] > 0){
+        BLSectionView* lastSection = [self.sectionViewArray lastObject];
+        sectionView.top = lastSection.bottom;
     }
-    [self addSubview:cell];
-    [self.inuseCellArray addObject:cell];
+    [self addSubview:sectionView];
+    [self.sectionViewArray addObject:sectionView];
 }
 
-- (void)_enqueueCell:(UIView *)cell{
-    if (!cell) return;
+- (void)_enqueueSection:(BLSectionView *)sectionView {
+    if (!sectionView) return;
     
-    if ([self.inuseCellArray count] > 0) {
-        UIView* topCell = [self.inuseCellArray objectAtIndex:0];
-        cell.bottom = topCell.top;
+    if ([self.sectionViewArray count] > 0) {
+        BLSectionView* topSectionView = [self.sectionViewArray objectAtIndex:0];
+        sectionView.frame = CGRectMake(0, 0, self.width, topSectionView.top);
     }
-    [self addSubview:cell];
-    [self.inuseCellArray insertObject:cell atIndex:0];
+    [self addSubview:sectionView];
+    [self.sectionViewArray insertObject:sectionView atIndex:0];
 }
 
 #pragma mark - Pan Guesture Event Handler
 - (void)_panMe:(UIPanGestureRecognizer *)pan{
     CGPoint point = [pan translationInView:self];
     CGPoint velocity = [pan velocityInView:self];
-    NSLog(@"translation x:%.2f, y:%.2f", point.x, point.y);
-    NSLog(@"velocity x:%.2f, y:%.2f", velocity.x, velocity.y);
-    NSLog(@"state:%ld", (long)pan.state);
     
     [self _translateView:point];
     
-    CGFloat vy = 20;
-    if (velocity.y < 0) {
-        vy = -20;
-    }
-    self.velocity = CGPointMake(velocity.x, vy);
-    
     if (pan.state == UIGestureRecognizerStateEnded && fabs(velocity.y) > 0) {
-        [self _resumeTimer];
+        NSLog(@"init velocity, x:%.2f, y:%.2f", velocity.x, velocity.y);
+        CGFloat vy = sqrt(fabs(velocity.y));
+        if (velocity.y < 0) {
+            vy = -vy;
+        }
+        NSLog(@"sqrt velocity, x:%.2f, y:%.2f", velocity.x, vy);
+        if (fabs(vy) > 10.f) {
+            self.velocity = CGPointMake(velocity.x, vy);
+            [self _resumeTimer];
+        }
     }
     else{
         [self _suspendTimer];
@@ -151,32 +185,50 @@
 }
 
 - (void)_translateView:(CGPoint)point{
-    if ([self.inuseCellArray count] <= 0) {
+    if ([self.sectionViewArray count] <= 0) {
         return;
     }
     
     NSMutableArray* toRemoveArray = [NSMutableArray array];
-    for (BLCellView* cell in self.inuseCellArray){
-        cell.top = cell.top + point.y;
+    for (BLSectionView* sectionView in self.sectionViewArray){
+        sectionView.top = sectionView.top + point.y;
+        if (sectionView.top < 0 && sectionView.bottom > 0) {
+            [sectionView accomodateInSize:CGSizeMake(0, sectionView.bottom)];
+            sectionView.top = 0;
+        }
         
-        if (!CGRectIntersectsRect(self.bounds, cell.frame)) {
-            [cell removeFromSuperview];
-            [self.delegate cellWillBeRemoved:cell];
-            [toRemoveArray addObject:cell];
+        if (!CGRectIntersectsRect(self.bounds, sectionView.frame)) {
+            [sectionView removeFromSuperview];
+//            [self.delegate cellWillBeRemoved:cell];
+            [toRemoveArray addObject:sectionView];
         }
     }
-    [self.inuseCellArray removeObjectsInArray:toRemoveArray];
+    [self.sectionViewArray removeObjectsInArray:toRemoveArray];
     
-    BLCellView* topCell = [self.inuseCellArray objectAtIndex:0];
-    while (topCell.top > 0) {
-        topCell = [self.dataSource cellForInfo:[topCell.cellInfo previous]];
-        [self _enqueueCell:topCell];
+    BLSectionView* topSection = [self.sectionViewArray objectAtIndex:0];
+    while (topSection.top > 0) {
+        CGFloat bottom = topSection.bottom;
+        [topSection accomodateInSize:CGSizeMake(self.width, bottom)];
+        if (topSection.fullExpanded) {
+            topSection.bottom = bottom;
+            CGFloat topSpace = topSection.top;
+            topSection = [self sectionViewFor:[topSection.sectionInfo previous]];
+            [topSection accomodateInSize:CGSizeMake(self.width, topSpace)];
+            topSection.bottom = topSpace;
+            [self _enqueueSection:topSection];
+        }
+        else{
+            topSection.top = 0;
+        }
     }
     
-    BLCellView* lastCell = [self.inuseCellArray lastObject];
-    while (lastCell.bottom < self.height){
-        lastCell = [self.dataSource cellForInfo:[lastCell.cellInfo next]];
-        [self _pushCell:lastCell];
+    BLSectionView* lastSection = [self.sectionViewArray lastObject];
+    while (lastSection.bottom < self.height){
+        CGFloat bottom = lastSection.bottom;
+        lastSection = [self sectionViewFor:[lastSection.sectionInfo next]];
+        [lastSection accomodateInSize:CGSizeMake(0, 10000)];
+        lastSection.top = bottom;
+        [self _pushSection:lastSection];
     }
 }
 

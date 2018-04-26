@@ -21,6 +21,9 @@
 		6235C5A82090CCC3007053AE /* BLNumberCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5A62090CCC2007053AE /* BLNumberCellView.m */; };
 		6235C5A92090CCC3007053AE /* BLNumberInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5A72090CCC3007053AE /* BLNumberInfo.m */; };
 		6235C5AD2090CEDF007053AE /* BLCellInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5AC2090CEDF007053AE /* BLCellInfo.m */; };
+		6235C5B22091B4B0007053AE /* BLSecionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5B12091B4B0007053AE /* BLSecionView.m */; };
+		6235C5B52091B4E0007053AE /* BLSectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5B42091B4E0007053AE /* BLSectionInfo.m */; };
+		6235C5B82091C95E007053AE /* BLNumberSectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5B72091C95E007053AE /* BLNumberSectionInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +72,12 @@
 		6235C5AA2090CDC9007053AE /* BLNumberCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLNumberCellView.h; sourceTree = "<group>"; };
 		6235C5AB2090CEDF007053AE /* BLCellInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLCellInfo.h; sourceTree = "<group>"; };
 		6235C5AC2090CEDF007053AE /* BLCellInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLCellInfo.m; sourceTree = "<group>"; };
+		6235C5AE209175BE007053AE /* BLSectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLSectionView.h; sourceTree = "<group>"; };
+		6235C5B12091B4B0007053AE /* BLSecionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLSecionView.m; sourceTree = "<group>"; };
+		6235C5B32091B4E0007053AE /* BLSectionInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLSectionInfo.h; sourceTree = "<group>"; };
+		6235C5B42091B4E0007053AE /* BLSectionInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLSectionInfo.m; sourceTree = "<group>"; };
+		6235C5B62091C95E007053AE /* BLNumberSectionInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLNumberSectionInfo.h; sourceTree = "<group>"; };
+		6235C5B72091C95E007053AE /* BLNumberSectionInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLNumberSectionInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +173,8 @@
 		6235C59D2090C0BB007053AE /* BLScrollView */ = {
 			isa = PBXGroup;
 			children = (
+				6235C5B62091C95E007053AE /* BLNumberSectionInfo.h */,
+				6235C5B72091C95E007053AE /* BLNumberSectionInfo.m */,
 				6235C5AA2090CDC9007053AE /* BLNumberCellView.h */,
 				6235C5A62090CCC2007053AE /* BLNumberCellView.m */,
 				6235C5A52090CCC2007053AE /* BLNumberInfo.h */,
@@ -174,6 +185,10 @@
 				6235C5A12090CCBB007053AE /* BLCellView.m */,
 				6235C5AB2090CEDF007053AE /* BLCellInfo.h */,
 				6235C5AC2090CEDF007053AE /* BLCellInfo.m */,
+				6235C5AE209175BE007053AE /* BLSectionView.h */,
+				6235C5B12091B4B0007053AE /* BLSecionView.m */,
+				6235C5B32091B4E0007053AE /* BLSectionInfo.h */,
+				6235C5B42091B4E0007053AE /* BLSectionInfo.m */,
 			);
 			path = BLScrollView;
 			sourceTree = "<group>";
@@ -308,15 +323,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6235C5B52091B4E0007053AE /* BLSectionInfo.m in Sources */,
 				6235C56C2090BFED007053AE /* BLViewController.m in Sources */,
 				6235C5A22090CCBB007053AE /* BLScrollView.m in Sources */,
 				6235C5A82090CCC3007053AE /* BLNumberCellView.m in Sources */,
+				6235C5B82091C95E007053AE /* BLNumberSectionInfo.m in Sources */,
 				6235C5A92090CCC3007053AE /* BLNumberInfo.m in Sources */,
 				6235C5772090BFEE007053AE /* main.m in Sources */,
 				6235C5A32090CCBB007053AE /* BLCellView.m in Sources */,
 				6235C5692090BFED007053AE /* AppDelegate.m in Sources */,
 				6235C5AD2090CEDF007053AE /* BLCellInfo.m in Sources */,
 				6235C59C2090C049007053AE /* UIView+Common.m in Sources */,
+				6235C5B22091B4B0007053AE /* BLSecionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

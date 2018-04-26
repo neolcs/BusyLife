@@ -26,5 +26,9 @@
     return [[BLNumberInfo alloc] initWithNum:self.num + 1];
 }
 
+- (NSString *)sectionKey{
+    NSString* value = [NSString stringWithFormat:@"%ld", self.num / 10];
+    return value;
+}
 
 @end
