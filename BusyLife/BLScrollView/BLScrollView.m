@@ -117,7 +117,7 @@
             [self _translateView:self.velocity];
         });
         self.velocity = CGPointMake(self.velocity.x, self.velocity.y / 1.05);
-        NSLog(@"decelerate, velocity x:%.2f, y:%.2f", self.velocity.x, self.velocity.y);
+//        NSLog(@"decelerate, velocity x:%.2f, y:%.2f", self.velocity.x, self.velocity.y);
     });
 }
 
@@ -167,12 +167,12 @@
     [self _translateView:point];
     
     if (pan.state == UIGestureRecognizerStateEnded && fabs(velocity.y) > 0) {
-        NSLog(@"init velocity, x:%.2f, y:%.2f", velocity.x, velocity.y);
+//        NSLog(@"init velocity, x:%.2f, y:%.2f", velocity.x, velocity.y);
         CGFloat vy = sqrt(fabs(velocity.y));
         if (velocity.y < 0) {
             vy = -vy;
         }
-        NSLog(@"sqrt velocity, x:%.2f, y:%.2f", velocity.x, vy);
+//        NSLog(@"sqrt velocity, x:%.2f, y:%.2f", velocity.x, vy);
         if (fabs(vy) > 10.f) {
             self.velocity = CGPointMake(velocity.x, vy);
             [self _resumeTimer];

@@ -11,9 +11,6 @@
 
 @interface BLSectionView()
 
-@property (nonatomic, strong) UIView* header;
-@property (nonatomic, strong) NSMutableArray* cellArray;
-
 @end
 
 @implementation BLSectionView
