@@ -28,6 +28,8 @@
 		6235C5BF209203CA007053AE /* BLCalendarSetionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5BE209203CA007053AE /* BLCalendarSetionInfo.m */; };
 		6235C5C22092040B007053AE /* BLCalendarCellInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5C12092040B007053AE /* BLCalendarCellInfo.m */; };
 		6235C5C52092177A007053AE /* BLWeekCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5C42092177A007053AE /* BLWeekCellView.m */; };
+		6235C5C82092CA9F007053AE /* BLDayGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5C72092CA9F007053AE /* BLDayGridView.m */; };
+		623E907920931C770021E825 /* BLDateViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E907820931C770021E825 /* BLDateViewModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +92,10 @@
 		6235C5C12092040B007053AE /* BLCalendarCellInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLCalendarCellInfo.m; sourceTree = "<group>"; };
 		6235C5C32092177A007053AE /* BLWeekCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLWeekCellView.h; sourceTree = "<group>"; };
 		6235C5C42092177A007053AE /* BLWeekCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLWeekCellView.m; sourceTree = "<group>"; };
+		6235C5C62092CA9F007053AE /* BLDayGridView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLDayGridView.h; sourceTree = "<group>"; };
+		6235C5C72092CA9F007053AE /* BLDayGridView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLDayGridView.m; sourceTree = "<group>"; };
+		623E907720931C770021E825 /* BLDateViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLDateViewModel.h; sourceTree = "<group>"; };
+		623E907820931C770021E825 /* BLDateViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLDateViewModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +146,7 @@
 		6235C5662090BFED007053AE /* BusyLife */ = {
 			isa = PBXGroup;
 			children = (
+				623E907620931C4E0021E825 /* ViewModel */,
 				6235C5BC2092037E007053AE /* Calendar */,
 				6235C59D2090C0BB007053AE /* BLScrollView */,
 				6235C5992090C032007053AE /* Category */,
@@ -217,8 +224,19 @@
 				6235C5C12092040B007053AE /* BLCalendarCellInfo.m */,
 				6235C5C32092177A007053AE /* BLWeekCellView.h */,
 				6235C5C42092177A007053AE /* BLWeekCellView.m */,
+				6235C5C62092CA9F007053AE /* BLDayGridView.h */,
+				6235C5C72092CA9F007053AE /* BLDayGridView.m */,
 			);
 			path = Calendar;
+			sourceTree = "<group>";
+		};
+		623E907620931C4E0021E825 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				623E907720931C770021E825 /* BLDateViewModel.h */,
+				623E907820931C770021E825 /* BLDateViewModel.m */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -353,9 +371,11 @@
 			files = (
 				6235C5C52092177A007053AE /* BLWeekCellView.m in Sources */,
 				6235C5B52091B4E0007053AE /* BLSectionInfo.m in Sources */,
+				623E907920931C770021E825 /* BLDateViewModel.m in Sources */,
 				6235C5BB20920226007053AE /* UIColor+Random.m in Sources */,
 				6235C56C2090BFED007053AE /* BLViewController.m in Sources */,
 				6235C5A22090CCBB007053AE /* BLScrollView.m in Sources */,
+				6235C5C82092CA9F007053AE /* BLDayGridView.m in Sources */,
 				6235C5A82090CCC3007053AE /* BLNumberCellView.m in Sources */,
 				6235C5BF209203CA007053AE /* BLCalendarSetionInfo.m in Sources */,
 				6235C5B82091C95E007053AE /* BLNumberSectionInfo.m in Sources */,

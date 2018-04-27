@@ -14,6 +14,8 @@
 #import "UIView+Common.h"
 
 #import "Calendar/BLCalendarSetionInfo.h"
+#import "Calendar/BLCalendarCellInfo.h"
+#import "Calendar/BLWeekCellView.h"
 
 @interface BLViewController ()<BLScrollViewDelegate, BLScrollViewDataSource>
 
@@ -26,13 +28,19 @@
     
     
     BLScrollView* scrollView = [[BLScrollView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:scrollView];
     scrollView.backgroundColor = [UIColor cyanColor];
     scrollView.delegate = self;
     scrollView.dataSource = self;
     scrollView.topSectionInfo = [BLCalendarSetionInfo current];
     [scrollView reloadData];
-    [self.view addSubview:scrollView];
+}
+
+- (void)updateViewConstraints {
+    [super updateViewConstraints];
     
+    [self.view setNeedsLayout];
+    [self.view layoutIfNeeded];
 }
 
 #pragma mark - BLScrollViewDelegate
@@ -40,14 +48,15 @@
 }
 
 #pragma mark - BLScrollViewDataSource
-- (UIView *)scrollView:(BLScrollView *)scrollView cellForInfo:(BLCellInfo *)cellInfo{
+- (BLCellView *)scrollView:(BLScrollView *)scrollView cellForInfo:(BLCellInfo *)cellInfo{
     if ([cellInfo isKindOfClass:NSClassFromString(@"BLCalendarCellInfo")]) {
-        
+        BLCalendarCellInfo* calendarInfo = (BLCalendarCellInfo *)cellInfo;
+        BLWeekCellView* cellView = [[BLWeekCellView alloc] initWithCellInfo:calendarInfo];
+        cellView.height = 40.f;
+        cellView.width = self.view.width;
+        return cellView;
     }
     return nil;
-//    BLNumberCellView* cellView = [[BLNumberCellView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 40.f)];
-//    cellView.cellInfo = cellInfo;
-//    return cellView;
 }
 
 - (UIView *)scrollView:(BLScrollView *)scrollView headerForInfo:(BLSectionInfo *)sectionInfo{

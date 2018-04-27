@@ -14,6 +14,8 @@
 
 @interface BLSectionView : UIView
 
+@property (nonatomic, strong) UIView* header;
+@property (nonatomic, strong) NSMutableArray* cellArray;
 @property (nonatomic, strong) BLSectionInfo* sectionInfo;
 @property (nonatomic, readonly) BOOL fullExpanded;
 

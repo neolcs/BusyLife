@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BLCalendarCellInfo.h"
+#import "BLCellView.h"
 
-@interface BLWeekCellView : UIView
+@interface BLWeekCellView : BLCellView
+
+- (instancetype)initWithCellInfo:(BLCalendarCellInfo *)cellInfo;
 
 @end

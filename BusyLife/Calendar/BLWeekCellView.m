@@ -7,15 +7,59 @@
 //
 
 #import "BLWeekCellView.h"
+#import "BLDayGridView.h"
+#import "BLDateViewModel.h"
+
+@interface BLWeekCellView()
+
+@property (nonatomic, strong) NSMutableArray* gridArray;
+
+- (void)_addContraints;
+
+@end
 
 @implementation BLWeekCellView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (instancetype)initWithCellInfo:(BLCalendarCellInfo *)cellInfo {
+    if (!cellInfo) return nil;
+    
+    self = [super init];
+    if (self) {
+        self.cellInfo = cellInfo;
+        
+        self.gridArray = [NSMutableArray array];
+        
+        for (int i = 0; i < 7; ++i) {
+            NSDate* date = [cellInfo.startDate dateByAddingTimeInterval:i*24*60*60];
+            BLDateViewModel* dateVM = [[BLDateViewModel alloc] initWithDate:date];
+            BLDayGridView* dayGridView = [[BLDayGridView alloc] initWithDateVM:dateVM];
+            [self addSubview:dayGridView];
+            [self.gridArray addObject:dayGridView];
+        }
+        
+        [self _addContraints];
+    }
+    return self;
 }
-*/
+
+- (void)_addContraints {
+    for (int i = 0; i < [self.gridArray count]; ++i) {
+        BLDayGridView* dayGridView = [self.gridArray objectAtIndex:i];
+        if (i == 0) {
+            [dayGridView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = true;
+        }
+        else{
+            BLDayGridView* prev = [self.gridArray objectAtIndex:i-1];
+            [dayGridView.leadingAnchor constraintEqualToAnchor:prev.trailingAnchor].active = true;
+            [dayGridView.widthAnchor constraintEqualToAnchor:prev.widthAnchor].active = true;
+        }
+        if (i == [self.gridArray count] - 1){
+            [dayGridView.trailingAnchor constraintEqualToAnchor: self.trailingAnchor].active = true;
+        }
+        
+        [dayGridView.heightAnchor constraintEqualToAnchor:self.heightAnchor].active = true;
+        [dayGridView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor].active = true;
+    }
+}
 
 @end
