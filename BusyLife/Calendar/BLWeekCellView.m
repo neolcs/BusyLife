@@ -9,6 +9,7 @@
 #import "BLWeekCellView.h"
 #import "BLDayGridView.h"
 #import "BLDateViewModel.h"
+#import "BLDataProvider.h"
 
 @interface BLWeekCellView()
 
@@ -31,7 +32,7 @@
         
         for (int i = 0; i < 7; ++i) {
             NSDate* date = [cellInfo.startDate dateByAddingTimeInterval:i*24*60*60];
-            BLDateViewModel* dateVM = [[BLDateViewModel alloc] initWithDate:date];
+            BLDateViewModel* dateVM = [[BLDataProvider sharedInstance] dateVMForDate:date];
             BLDayGridView* dayGridView = [[BLDayGridView alloc] initWithDateVM:dateVM];
             [self addSubview:dayGridView];
             [self.gridArray addObject:dayGridView];
@@ -57,8 +58,8 @@
             [dayGridView.trailingAnchor constraintEqualToAnchor: self.trailingAnchor].active = true;
         }
         
-        [dayGridView.heightAnchor constraintEqualToAnchor:self.heightAnchor].active = true;
-        [dayGridView.centerYAnchor constraintEqualToAnchor:self.centerYAnchor].active = true;
+        [dayGridView.topAnchor constraintEqualToAnchor:self.topAnchor].active = true;
+        [dayGridView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = true;
     }
 }
 

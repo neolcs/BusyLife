@@ -78,6 +78,7 @@
         
         weakSelf.monthDay.backgroundColor = weakSelf.dateVM.dayBackColor;
         weakSelf.monthDay.textColor = weakSelf.dateVM.dayTextColor;
+        weakSelf.dot.hidden = !([weakSelf.dateVM.events count] > 0) || weakSelf.dateVM.highlight || weakSelf.dateVM.lineNumber > 1;
     };
     
     self.dateVM.updateHandler();

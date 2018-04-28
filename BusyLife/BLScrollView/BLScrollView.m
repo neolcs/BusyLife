@@ -135,6 +135,11 @@
     }
     self.isDecelerating = NO;
     dispatch_suspend(self.timer);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"first Section Bottom:%.2f", [[self.sectionViewArray objectAtIndex:0] bottom]);
+        NSLog(@"second section Bottom:%.2f", [[self.sectionViewArray objectAtIndex:1] top]);
+    });
 }
 
 #pragma mark - Cell Management

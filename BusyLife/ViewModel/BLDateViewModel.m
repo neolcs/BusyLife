@@ -48,7 +48,7 @@
 - (UIColor *)backColor{
     NSCalendar* calender = [NSCalendar currentCalendar];
     NSInteger month = [calender component:NSCalendarUnitMonth fromDate:self.date];
-    return month % 2 == 0 ? [UIColor whiteColor] : [UIColor lightGrayColor];
+    return month % 2 == 0 ? [UIColor whiteColor] : [UIColor colorWithWhite:0.8 alpha:0.5];
 }
 
 - (UIColor *)dayBackColor {

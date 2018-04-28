@@ -17,6 +17,7 @@ typedef void (^DateVMUpdateHandler)(void);
 
 @property (nonatomic, strong) NSDate* date;
 @property (nonatomic, assign) BOOL highlight;
+@property (nonatomic, strong) NSArray* events;
 @property (nonatomic, copy) DateVMUpdateHandler updateHandler;
 @property (nonatomic, readonly) NSString* title;
 @property (nonatomic, readonly) int lineNumber;

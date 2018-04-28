@@ -17,6 +17,8 @@
 #import "Calendar/BLCalendarCellInfo.h"
 #import "Calendar/BLWeekCellView.h"
 
+#import "BLDataProvider.h"
+
 @interface BLViewController ()<BLScrollViewDelegate, BLScrollViewDataSource>
 
 @end
@@ -26,10 +28,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[BLDataProvider sharedInstance] loadData];
     
-    BLScrollView* scrollView = [[BLScrollView alloc] initWithFrame:self.view.bounds];
+    BLScrollView* scrollView = [[BLScrollView alloc] initWithFrame:CGRectMake(0, 100, self.view.width, 160.f)];
     [self.view addSubview:scrollView];
-    scrollView.backgroundColor = [UIColor cyanColor];
+    scrollView.clipsToBounds = YES;
     scrollView.delegate = self;
     scrollView.dataSource = self;
     scrollView.topSectionInfo = [BLCalendarSetionInfo current];
