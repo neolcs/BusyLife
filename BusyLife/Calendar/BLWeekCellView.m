@@ -13,6 +13,7 @@
 
 @interface BLWeekCellView()
 
+@property (nonatomic, strong) UIView* borderView;
 @property (nonatomic, strong) NSMutableArray* gridArray;
 
 - (void)_addContraints;
@@ -38,6 +39,12 @@
             [self.gridArray addObject:dayGridView];
         }
         
+        UIView* borderView = [[UIView alloc] init];
+        borderView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
+        borderView.translatesAutoresizingMaskIntoConstraints = false;
+        [self addSubview:borderView];
+        self.borderView = borderView;
+        
         [self _addContraints];
     }
     return self;
@@ -61,6 +68,11 @@
         [dayGridView.topAnchor constraintEqualToAnchor:self.topAnchor].active = true;
         [dayGridView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = true;
     }
+    
+    [self.borderView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = true;
+    [self.borderView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = true;
+    [self.borderView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = true;
+    [self.borderView.heightAnchor constraintEqualToConstant:0.5].active = true;
 }
 
 @end

@@ -136,10 +136,10 @@
     self.isDecelerating = NO;
     dispatch_suspend(self.timer);
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"first Section Bottom:%.2f", [[self.sectionViewArray objectAtIndex:0] bottom]);
-        NSLog(@"second section Bottom:%.2f", [[self.sectionViewArray objectAtIndex:1] top]);
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        NSLog(@"first Section Bottom:%.2f", [[self.sectionViewArray objectAtIndex:0] bottom]);
+//        NSLog(@"second section Bottom:%.2f", [[self.sectionViewArray objectAtIndex:1] top]);
+//    });
 }
 
 #pragma mark - Cell Management
@@ -166,14 +166,16 @@
 
 #pragma mark - Pan Guesture Event Handler
 - (void)_panMe:(UIPanGestureRecognizer *)pan{
-    CGPoint point = [pan translationInView:self];
-    CGPoint velocity = [pan velocityInView:self];
+    CGPoint rawPoint = [pan translationInView:self];
+    CGPoint rawVelocity = [pan velocityInView:self];
     
+    CGPoint point = CGPointMake(floor(rawPoint.x), floor(rawPoint.y));
+    CGPoint velocity = CGPointMake(floor(rawVelocity.x), floor(rawVelocity.y));
     [self _translateView:point];
     
     if (pan.state == UIGestureRecognizerStateEnded && fabs(velocity.y) > 0) {
 //        NSLog(@"init velocity, x:%.2f, y:%.2f", velocity.x, velocity.y);
-        CGFloat vy = sqrt(fabs(velocity.y));
+        CGFloat vy = floor(sqrt(fabs(velocity.y)));
         if (velocity.y < 0) {
             vy = -vy;
         }

@@ -12,8 +12,12 @@
 @interface BLDataProvider : NSObject
 
 + (BLDataProvider *)sharedInstance;
-
 - (void)loadData;
+
+
+//Get the ViewModel for required date.
+//search for the target VM from Array first, if not found, then expand the current ViewModel ArrayList cover the date.
+//Currently, the dateVM array will increase infinitely, we will need to control the size later, maybe at the size of 365
 - (BLDateViewModel *)dateVMForDate:(NSDate *)date;
 
 @end

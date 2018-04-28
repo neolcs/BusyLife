@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSMutableArray* dateVMArray;
 
 - (void)_fillDateVMWithDate:(NSDate *)date;
+- (void)_timezoneChanged:(NSNotification *)notif;
 
 @end
 
@@ -36,6 +37,11 @@
     if (self) {
         self.dateVMArray = [NSMutableArray array];
         self.eventArray = [NSMutableArray array];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(_timezoneChanged:)
+                                                     name:NSSystemTimeZoneDidChangeNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -88,9 +94,21 @@
     return [self.dateVMArray objectAtIndex:i];
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Private Method
 - (void)_fillDateVMWithDate:(NSDate *)date {
     NSDate* monthBefore = [[date dateByAddingTimeInterval:-31*24*60*60] resetTo0];
     NSDate* monthAfter = [[date dateByAddingTimeInterval:31*24*60*60] resetTo0];
+    
+    if ([self.dateVMArray count] > 0) {
+        if ([monthBefore compare:[[self.dateVMArray lastObject] date]] == NSOrderedDescending
+            || [monthAfter compare:[[self.dateVMArray objectAtIndex:0] date]] == NSOrderedAscending) {
+            [self.dateVMArray removeAllObjects];
+        }
+    }
 
     NSDate* middleBefore = monthAfter;
     if ([self.dateVMArray count] > 0) {
@@ -146,6 +164,10 @@
         [self.dateVMArray addObject:dateVM];
         middleAfter = [middleAfter dateByAddingTimeInterval:24*60*60];
     }
+}
+
+- (void)_timezoneChanged:(NSNotification *)notif{
+    [self.dateVMArray removeAllObjects];
 }
 
 @end
