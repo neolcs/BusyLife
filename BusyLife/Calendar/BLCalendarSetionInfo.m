@@ -7,9 +7,10 @@
 //
 
 #import "BLCalendarSetionInfo.h"
-#import "BLCalendarCellInfo.h"
 
 @implementation BLCalendarSetionInfo
+
+@synthesize cellInfoArray = _cellInfoArray;
 
 + (BLCalendarSetionInfo *)current{
     NSCalendar* cal = [NSCalendar currentCalendar];
@@ -26,9 +27,9 @@
     if (self) {
         _startDate = startDate;
         
-        BLCalendarCellInfo* cellInfo = [[BLCalendarCellInfo alloc] init];
-        cellInfo.startDate = startDate;
-        [self.cellInfoArray addObject:cellInfo];
+        NSMutableArray* tempArray = [NSMutableArray array];
+        [tempArray addObject:startDate];
+        self.cellInfoArray = tempArray;
     }
     return self;
 }

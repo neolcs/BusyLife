@@ -53,7 +53,7 @@
     
     if (!self.topSectionInfo) return;
     
-    BLSectionInfo* current = self.topSectionInfo;
+    id<BLSectionInfo> current = self.topSectionInfo;
     
     BLSectionView* sectionView = [self sectionViewFor:current];
     [self _pushSection:sectionView];
@@ -64,7 +64,7 @@
     }
 }
 
-- (BLSectionView *)sectionViewFor:(BLSectionInfo *)sectionInfo{
+- (BLSectionView *)sectionViewFor:(id<BLSectionInfo>)sectionInfo{
     if (nil == sectionInfo) {
         return nil;
     }
@@ -82,11 +82,14 @@
         }
     }
     
-    for (BLCellInfo* cellInfo in sectionInfo.cellInfoArray){
-        BLCellView* cell = [self.dataSource scrollView:self cellForInfo:cellInfo];
+    NSMutableArray* cellArray = [NSMutableArray array];
+    for (id cellInfo in sectionInfo.cellInfoArray){
+        UIView* cell = [self.dataSource scrollView:self cellForInfo:cellInfo];
         [sectionView addSubview:cell];
-        [sectionView.cellArray addObject:cell];
+        [cellArray addObject:cell];
     }
+    sectionView.cellArray = cellArray;
+    
     [sectionView accomodateInSize:CGSizeMake(0, 10000)];
     return sectionView;
 }

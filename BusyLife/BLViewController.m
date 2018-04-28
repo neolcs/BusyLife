@@ -8,16 +8,14 @@
 
 #import "BLViewController.h"
 #import "BLScrollView.h"
-
 #import "UIView+Common.h"
-
 #import "Calendar/BLCalendarSetionInfo.h"
-#import "Calendar/BLCalendarCellInfo.h"
 #import "Calendar/BLWeekCellView.h"
-
 #import "BLDataProvider.h"
 
 @interface BLViewController ()<BLScrollViewDelegate, BLScrollViewDataSource>
+
+@property (nonatomic, strong) BLScrollView* calendarView;
 
 @end
 
@@ -28,13 +26,15 @@
     
     [[BLDataProvider sharedInstance] loadData];
     
-    BLScrollView* scrollView = [[BLScrollView alloc] initWithFrame:CGRectMake(0, 100, self.view.width, 160.f)];
-    [self.view addSubview:scrollView];
-    scrollView.clipsToBounds = YES;
-    scrollView.delegate = self;
-    scrollView.dataSource = self;
-    scrollView.topSectionInfo = [BLCalendarSetionInfo current];
-    [scrollView reloadData];
+    BLScrollView* calendarView = [[BLScrollView alloc] initWithFrame:CGRectMake(0, 100, self.view.width, 160.f)];
+    self.calendarView = calendarView;
+    [self.view addSubview:calendarView];
+    calendarView.clipsToBounds = YES;
+    calendarView.delegate = self;
+    calendarView.dataSource = self;
+    calendarView.topSectionInfo = [BLCalendarSetionInfo current];
+    
+    [calendarView reloadData];
 }
 
 - (void)updateViewConstraints {
@@ -45,14 +45,13 @@
 }
 
 #pragma mark - BLScrollViewDelegate
-- (void)cellWillBeRemoved:(BLCellView *)cell{
+- (void)cellWillBeRemoved:(UIView *)cell{
 }
 
 #pragma mark - BLScrollViewDataSource
-- (BLCellView *)scrollView:(BLScrollView *)scrollView cellForInfo:(BLCellInfo *)cellInfo{
-    if ([cellInfo isKindOfClass:NSClassFromString(@"BLCalendarCellInfo")]) {
-        BLCalendarCellInfo* calendarInfo = (BLCalendarCellInfo *)cellInfo;
-        BLWeekCellView* cellView = [[BLWeekCellView alloc] initWithCellInfo:calendarInfo];
+- (UIView *)scrollView:(BLScrollView *)scrollView cellForInfo:(id)object{
+    if ( scrollView == self.calendarView && [object isKindOfClass:[NSDate class]]) {
+        BLWeekCellView* cellView = [[BLWeekCellView alloc] initWithStartDate:object];
         cellView.height = 40.f;
         cellView.width = self.view.width;
         return cellView;
@@ -60,7 +59,7 @@
     return nil;
 }
 
-- (UIView *)scrollView:(BLScrollView *)scrollView headerForInfo:(BLSectionInfo *)sectionInfo{
+- (UIView *)scrollView:(BLScrollView *)scrollView headerForInfo:(id<BLSectionInfo>)sectionInfo{
     return nil;
 }
 

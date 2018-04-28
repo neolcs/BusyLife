@@ -8,7 +8,7 @@
 
 #import "BLSectionInfo.h"
 
-@interface BLCalendarSetionInfo : BLSectionInfo
+@interface BLCalendarSetionInfo : NSObject<BLSectionInfo>
 
 @property (nonatomic, strong, readonly) NSDate* startDate;
 

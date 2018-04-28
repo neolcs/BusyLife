@@ -8,15 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-
-#import "BLCellView.h"
 #import "BLSectionInfo.h"
 
 @interface BLSectionView : UIView
 
 @property (nonatomic, strong) UIView* header;
-@property (nonatomic, strong) NSMutableArray* cellArray;
-@property (nonatomic, strong) BLSectionInfo* sectionInfo;
+@property (nonatomic, strong) NSArray* cellArray;
+@property (nonatomic, strong) id<BLSectionInfo> sectionInfo;
 @property (nonatomic, readonly) BOOL fullExpanded;
 
 

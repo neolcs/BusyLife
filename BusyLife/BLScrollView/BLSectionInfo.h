@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface BLSectionInfo : NSObject
+@protocol BLSectionInfo<NSObject>
 
-@property (nonatomic, strong) NSMutableArray* cellInfoArray;
+@property (nonatomic, strong) NSArray* cellInfoArray;
 
-- (BLSectionInfo *)previous;
-- (BLSectionInfo *)next;
+- (id<BLSectionInfo>)previous;
+- (id<BLSectionInfo>)next;
 
 @end

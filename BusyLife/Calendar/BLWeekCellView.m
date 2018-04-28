@@ -13,6 +13,7 @@
 
 @interface BLWeekCellView()
 
+@property (nonatomic, strong) NSDate* startDate;
 @property (nonatomic, strong) UIView* borderView;
 @property (nonatomic, strong) NSMutableArray* gridArray;
 
@@ -22,17 +23,17 @@
 
 @implementation BLWeekCellView
 
-- (instancetype)initWithCellInfo:(BLCalendarCellInfo *)cellInfo {
-    if (!cellInfo) return nil;
+- (instancetype)initWithStartDate:(NSDate *)startDate{
+    if (!startDate) return nil;
     
     self = [super init];
     if (self) {
-        self.cellInfo = cellInfo;
+        self.startDate = startDate;
         
         self.gridArray = [NSMutableArray array];
         
         for (int i = 0; i < 7; ++i) {
-            NSDate* date = [cellInfo.startDate dateByAddingTimeInterval:i*24*60*60];
+            NSDate* date = [self.startDate dateByAddingTimeInterval:i*24*60*60];
             BLDateViewModel* dateVM = [[BLDataProvider sharedInstance] dateVMForDate:date];
             BLDayGridView* dayGridView = [[BLDayGridView alloc] initWithDateVM:dateVM];
             [self addSubview:dayGridView];
