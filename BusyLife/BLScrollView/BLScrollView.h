@@ -13,7 +13,10 @@
 @class BLScrollView;
 @protocol BLScrollViewDelegate<NSObject>
 
-- (void)cellWillBeRemoved:(UIView *)cell;       //called when the cell is out of the visible rect, hence is remove from BLScrollView
+- (void)scrollView:(BLScrollView *)scrollView sectionWillBeRemoved:(id<BLSectionInfo>)sectionInfo;       //called when the section is out of the visible rect, hence is remove from BLScrollView
+
+//the delegate method called when the top most section changed to another info
+- (void)scrollView:(BLScrollView *)scrollView topSectionChanged:(id<BLSectionInfo>)sectionInfo;
 
 @end
 

@@ -69,8 +69,19 @@
     [self.view layoutIfNeeded];
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - BLScrollViewDelegate
 - (void)cellWillBeRemoved:(UIView *)cell{
+}
+
+- (void)scrollView:(BLScrollView *)scrollView topSectionChanged:(id<BLSectionInfo>)sectionInfo {
+    if (scrollView == self.agendaView) {
+        BLAgendaSectionInfo* agendaSectionInfo = (BLAgendaSectionInfo *)sectionInfo;
+        [[NSNotificationCenter defaultCenter] postNotificationName:BLDayGridViewHighlight object:agendaSectionInfo.dateVM];
+    }
 }
 
 #pragma mark - BLScrollViewDataSource
@@ -115,7 +126,8 @@
 
 #pragma mark - Private
 - (void)_currentDateVMChanged:(NSNotification *)notif{
-    if ([notif.object isKindOfClass:[BLDateViewModel class]]) {
+    if ([notif.name isEqualToString:BLDayGridViewHighlight]
+        && [notif.object isKindOfClass:[BLDateViewModel class]]) {
         BLDateViewModel* dateVM = (BLDateViewModel *)notif.object;
         BLAgendaSectionInfo* sectionInfo = [[BLAgendaSectionInfo alloc] initWithDateVM:dateVM];
         self.agendaView.topSectionInfo = sectionInfo;

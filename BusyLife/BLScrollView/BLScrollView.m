@@ -223,8 +223,10 @@
         
         if (!CGRectIntersectsRect(self.bounds, sectionView.frame)) {
             [sectionView removeFromSuperview];
-//            [self.delegate cellWillBeRemoved:cell];
             [toRemoveArray addObject:sectionView];
+            if ([self.delegate respondsToSelector:@selector(scrollView:sectionWillBeRemoved:)]) {
+                [self.delegate scrollView:self topSectionChanged:sectionView.sectionInfo];
+            }
         }
     }
     [self.sectionViewArray removeObjectsInArray:toRemoveArray];
@@ -253,6 +255,16 @@
         [lastSection accomodateInSize:CGSizeMake(0, 10000)];
         lastSection.top = bottom;
         [self _pushSection:lastSection];
+    }
+    
+    if ([self.sectionViewArray count] > 0) {
+        BLSectionView* sectionView = [self.sectionViewArray objectAtIndex:0];
+        if (![_topSectionInfo isEqual:sectionView.sectionInfo]) {
+            _topSectionInfo = sectionView.sectionInfo;
+            if ([self.delegate respondsToSelector:@selector(scrollView:topSectionChanged:)]) {
+                [self.delegate scrollView:self topSectionChanged:self.topSectionInfo];
+            }
+        }
     }
 }
 

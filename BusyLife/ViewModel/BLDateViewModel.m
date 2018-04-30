@@ -79,7 +79,9 @@
     if (highlight == _highlight) return;
     
     _highlight = highlight;
-    self.updateHandler();
+    if (self.updateHandler) {
+        self.updateHandler();
+    }
 }
 
 - (BOOL)isEqual:(id)object {
