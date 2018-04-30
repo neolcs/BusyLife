@@ -114,17 +114,17 @@
     [self.startLabel.widthAnchor constraintEqualToConstant:60.f].active = true;
     [self.startLabel.heightAnchor constraintEqualToConstant:25.f].active = true;
     
-    [self.rangeLabel.topAnchor constraintEqualToAnchor:self.startLabel.bottomAnchor constant:5.f].active = true;
+    [self.rangeLabel.topAnchor constraintEqualToAnchor:self.startLabel.bottomAnchor constant:0.f].active = true;
     [self.rangeLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:7.f].active = true;
     [self.rangeLabel.widthAnchor constraintEqualToConstant:60.f].active = true;
-    [self.rangeLabel.heightAnchor constraintEqualToConstant:25.f].active = true;
+    [self.rangeLabel.heightAnchor constraintEqualToConstant:20.f].active = true;
     
     [self.typeView.leadingAnchor constraintEqualToAnchor:self.startLabel.trailingAnchor constant:10.f].active = true;
-    [self.typeView.topAnchor constraintEqualToAnchor:self.topAnchor constant:5.f].active = true;
+    [self.typeView.topAnchor constraintEqualToAnchor:self.topAnchor constant:12.f].active = true;
     [self.typeView.widthAnchor constraintEqualToConstant:10.f].active = true;
     [self.typeView.heightAnchor constraintEqualToConstant:10.f].active = true;
     
-    [self.titleLabel.leadingAnchor constraintEqualToAnchor:self.typeView.trailingAnchor constant:7.f].active = true;
+    [self.titleLabel.leadingAnchor constraintEqualToAnchor:self.typeView.trailingAnchor constant:10.f].active = true;
     [self.titleLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:5.f].active = true;
     [self.titleLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-7.f].active = true;
     [self.titleLabel.heightAnchor constraintEqualToConstant:25.f].active = true;
@@ -137,7 +137,7 @@
     for (int i = 0; i < [self.attenderArray count]; ++i) {
         UIView* iconView = [self.attenderArray objectAtIndex:i];
         if (i == 0) {
-            [iconView.leadingAnchor constraintEqualToAnchor:self.iconBackView.leadingAnchor constant:7.f].active = true;
+            [iconView.leadingAnchor constraintEqualToAnchor:self.iconBackView.leadingAnchor].active = true;
         }
         else{
             UIView* prev = [self.attenderArray objectAtIndex:i-1];
@@ -149,15 +149,15 @@
         iconView.layer.cornerRadius = 10.f;
     }
     
-    [self.anchorView.leadingAnchor constraintLessThanOrEqualToAnchor:self.titleLabel.leadingAnchor].active = true;
+    [self.anchorView.leadingAnchor constraintLessThanOrEqualToAnchor:self.titleLabel.leadingAnchor constant:-2.f].active = true;
     [self.anchorView.topAnchor constraintEqualToAnchor:self.iconBackView.bottomAnchor constant:5.f].active = true;
     [self.anchorView.widthAnchor constraintEqualToConstant:20.f].active = true;
     [self.anchorView.heightAnchor constraintEqualToConstant:20.f].active = true;
     
-    [self.locationLabel.leadingAnchor constraintEqualToAnchor:self.anchorView.trailingAnchor constant:7.f].active = true;
+    [self.locationLabel.leadingAnchor constraintEqualToAnchor:self.anchorView.trailingAnchor constant:2.f].active = true;
     [self.locationLabel.topAnchor constraintEqualToAnchor:self.anchorView.topAnchor constant:5.f].active = true;
     [self.locationLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-7.f].active = true;
-    [self.locationLabel.heightAnchor constraintEqualToConstant:20.f].active = true;
+    [self.locationLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-7.f].active = true;
 }
 
 - (void)layoutSubviews {

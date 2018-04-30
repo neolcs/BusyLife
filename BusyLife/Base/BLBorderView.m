@@ -28,6 +28,8 @@
         CGContextSetLineWidth(context, self.borderWidth);
         CGContextAddPath(context, path);
         CGContextStrokePath(context);
+        
+        CGPathRelease(path);
     }
 }
 

@@ -22,7 +22,7 @@
 
 @end
 
-#define BLDayGridDaySize   (40.f)
+#define BLDayGridDaySize   (30.f)
 #define BLDayGridDotSize    (5.f)
 
 @implementation BLDayGridView

@@ -45,6 +45,17 @@
     return self;
 }
 
+- (void)setTopSectionInfo:(id<BLSectionInfo>)topSectionInfo {
+    if ([_topSectionInfo isEqual:topSectionInfo]) {
+        return;
+    }
+    BOOL shouldAutoReload = _topSectionInfo != nil;
+    _topSectionInfo = topSectionInfo;
+    if (shouldAutoReload) {
+        [self reloadData];
+    }
+}
+
 - (void)reloadData {
     for (UIView* subView in self.sectionViewArray){
         [subView removeFromSuperview];

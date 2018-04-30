@@ -70,7 +70,7 @@
 
 - (UIColor *)headerTitleColor {
     if ([[self.date resetTo0] isEqual:[[NSDate date] resetTo0]]) {
-        return [UIColor magentaColor];
+        return [UIColor blueColor];
     }
     return [UIColor lightGrayColor];
 }

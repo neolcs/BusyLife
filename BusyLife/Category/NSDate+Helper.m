@@ -18,7 +18,7 @@
 
 - (NSString *)dayTime{
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"hh:mm a";
+    formatter.dateFormat = @"h:mm a";
     return [formatter stringFromDate:self];
 }
 

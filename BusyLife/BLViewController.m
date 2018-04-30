@@ -23,6 +23,8 @@
 @property (nonatomic, strong) BLScrollView* calendarView;
 @property (nonatomic, strong) BLScrollView* agendaView;
 
+- (void)_currentDateVMChanged:(NSNotification *)notif;
+
 @end
 
 @implementation BLViewController
@@ -32,10 +34,10 @@
     
     [[BLDataProvider sharedInstance] loadData];
     
-    BLCalendarHeaderView* calendarHeaderView = [[BLCalendarHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 40.f)];
+    BLCalendarHeaderView* calendarHeaderView = [[BLCalendarHeaderView alloc] initWithFrame:CGRectMake(0, 20, self.view.width, 40.f)];
     [self.view addSubview:calendarHeaderView];
     
-    BLScrollView* calendarView = [[BLScrollView alloc] initWithFrame:CGRectMake(0, 40, self.view.width, 160.f)];
+    BLScrollView* calendarView = [[BLScrollView alloc] initWithFrame:CGRectMake(0, calendarHeaderView.bottom, self.view.width, 160.f)];
     [self.view addSubview:calendarView];
     calendarView.clipsToBounds = YES;
     calendarView.delegate = self;
@@ -43,7 +45,7 @@
     calendarView.topSectionInfo = [BLCalendarSetionInfo current];
     self.calendarView = calendarView;
     
-    BLScrollView* agendaView = [[BLScrollView alloc] initWithFrame:CGRectMake(0, 200, self.view.width, 300.f)];
+    BLScrollView* agendaView = [[BLScrollView alloc] initWithFrame:CGRectMake(0, calendarView.bottom, self.view.width, 300.f)];
     agendaView.clipsToBounds = YES;
     agendaView.delegate = self;
     agendaView.dataSource = self;
@@ -53,6 +55,11 @@
     
     [self.calendarView reloadData];
     [self.agendaView reloadData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_currentDateVMChanged:)
+                                                 name:BLDayGridViewHighlight
+                                               object:nil];
 }
 
 - (void)updateViewConstraints {
@@ -104,6 +111,15 @@
         return header;
     }
     return nil;
+}
+
+#pragma mark - Private
+- (void)_currentDateVMChanged:(NSNotification *)notif{
+    if ([notif.object isKindOfClass:[BLDateViewModel class]]) {
+        BLDateViewModel* dateVM = (BLDateViewModel *)notif.object;
+        BLAgendaSectionInfo* sectionInfo = [[BLAgendaSectionInfo alloc] initWithDateVM:dateVM];
+        self.agendaView.topSectionInfo = sectionInfo;
+    }
 }
 
 @end

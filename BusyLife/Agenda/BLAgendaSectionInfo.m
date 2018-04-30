@@ -26,6 +26,15 @@
     return self;
 }
 
+- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[BLAgendaSectionInfo class]]) {
+        return false;
+    }
+    
+    BLAgendaSectionInfo* another = (BLAgendaSectionInfo *)object;
+    return [self.dateVM isEqual:another.dateVM];
+}
+
 - (NSArray *)cellInfoArray {
     if (self.dateVM.events && [self.dateVM.events count] > 0) {
         return self.dateVM.events;
