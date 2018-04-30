@@ -115,6 +115,7 @@ typedef void (*objectSetter_t)(id, SEL, id);
         NSString* attrType = [NSString stringWithUTF8String:property_getAttributes( *(properties+i) )];
         [dict setObject:attrType forKey:attrName];
     }
+    free(properties);
     return dict;
 }
 

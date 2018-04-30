@@ -24,6 +24,8 @@ typedef void (^DateVMUpdateHandler)(void);
 @property (nonatomic, readonly) UIColor* backColor;
 @property (nonatomic, readonly) UIColor* dayBackColor;
 @property (nonatomic, readonly) UIColor* dayTextColor;
+@property (nonatomic, readonly) NSString* headerTitle;
+@property (nonatomic, readonly) UIColor* headerTitleColor;
 
 - (instancetype)initWithDate:(NSDate *)date;
 

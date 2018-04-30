@@ -27,7 +27,7 @@
   {
       "startDate": 1524888000,
       "range": 3600,
-      "type": 1,
+      "type": 2,
       "title": "朝鲜核问题",
       "desc": "和平还是战争, 这是个问题",
       "attends": [
@@ -52,7 +52,7 @@
   {
       "startDate": 1524909600,
       "range": 5400,
-      "type": 1,
+      "type": 3,
       "title": "再论叙利亚化武事件",
       "desc": "真相到底是什么",
       "attends": [
@@ -102,7 +102,7 @@
   {
       "startDate": 1525086000,
       "range": 1800,
-      "type": 1,
+      "type": 2,
       "title": "朝鲜核问题",
       "desc": "和平还是战争, 这是个问题",
       "attends": [
@@ -177,7 +177,7 @@
   {
   "startDate": 1525219200,
   "range": 3600,
-  "type": 1,
+  "type": 2,
   "title": "叙利亚化武事件",
   "desc": "真相到底是什么",
   "attends": [

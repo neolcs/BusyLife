@@ -25,4 +25,20 @@
     XCTAssert(![resetDate52 isEqual:standardDate], @"reset to start of day, not work correctlly");
 }
 
+- (void)testDayTime{
+    NSDate* pmDate = [NSDate dateWithTimeIntervalSince1970:1525190399];
+    NSString* dayTime = [pmDate dayTime];
+    XCTAssert([dayTime isEqualToString:@"11:59 PM"], @"day time for pm error");
+    
+    NSDate* amDate = [NSDate dateWithTimeIntervalSince1970:1525133100];
+    dayTime = [amDate dayTime];
+    XCTAssert([dayTime isEqualToString:@"08:05 AM"], @"day time for am error");
+}
+
+- (void)testHeaderDisplay {
+    NSDate* date = [NSDate dateWithTimeIntervalSince1970:1525133100];
+    NSString* headerDisplay = [date headerDisplay];
+    XCTAssert([headerDisplay isEqualToString:@"TUESDAY, MAY 1"], @"header display error");
+}
+
 @end

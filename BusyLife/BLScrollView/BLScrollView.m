@@ -89,6 +89,9 @@
         [cellArray addObject:cell];
     }
     sectionView.cellArray = cellArray;
+    if (sectionView.header) {
+        [sectionView bringSubviewToFront:sectionView.header];
+    }
     
     [sectionView accomodateInSize:CGSizeMake(0, 10000)];
     return sectionView;

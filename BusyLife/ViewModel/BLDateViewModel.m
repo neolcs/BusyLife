@@ -7,6 +7,7 @@
 //
 
 #import "BLDateViewModel.h"
+#import "NSDate+Helper.h"
 
 @interface BLDateViewModel()
 
@@ -57,6 +58,21 @@
 
 - (UIColor *)dayTextColor {
     return self.highlight ? [UIColor whiteColor] : [UIColor darkGrayColor];
+}
+
+- (NSString *)headerTitle {
+    NSMutableString* title = [NSMutableString string];
+    if ([[self.date resetTo0] isEqual:[[NSDate date] resetTo0]]) {
+        [title appendString:@"TODAY \u2022 "];
+    }
+    return [title stringByAppendingString:[self.date headerDisplay]];
+}
+
+- (UIColor *)headerTitleColor {
+    if ([[self.date resetTo0] isEqual:[[NSDate date] resetTo0]]) {
+        return [UIColor magentaColor];
+    }
+    return [UIColor lightGrayColor];
 }
 
 - (void)setHighlight:(BOOL)highlight {

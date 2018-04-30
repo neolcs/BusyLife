@@ -11,5 +11,7 @@
 @interface NSDate (Helper)
 
 - (NSDate *)resetTo0;
+- (NSString *)dayTime;
+- (NSString *)headerDisplay;
 
 @end

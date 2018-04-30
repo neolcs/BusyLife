@@ -16,4 +16,16 @@
     return [formatter dateFromString:[formatter stringFromDate:self]];
 }
 
+- (NSString *)dayTime{
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"hh:mm a";
+    return [formatter stringFromDate:self];
+}
+
+- (NSString *)headerDisplay{
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"EEEE, MMMM d";
+    return [[formatter stringFromDate:self] uppercaseString];
+}
+
 @end
