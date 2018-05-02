@@ -21,6 +21,7 @@
     self = [super init];
     if (self) {
         _date = date;
+        _highlight = [[date resetTo0] isEqual:[[NSDate date] resetTo0]];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_highlightChanged:) name:BLDayGridViewHighlight object:nil];
     }
