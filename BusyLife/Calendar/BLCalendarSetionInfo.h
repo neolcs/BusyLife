@@ -13,6 +13,7 @@
 @property (nonatomic, strong, readonly) NSDate* startDate;
 
 - (instancetype)initWithStartDate:(NSDate *)startDate;
+- (instancetype)initWithDate:(NSDate *)date;
 
 + (BLCalendarSetionInfo *)current;
 

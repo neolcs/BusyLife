@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BLDateViewModel.h"
+#import "BLBorderView.h"
 
-@interface BLAgendaHeaderView : UIView
+@interface BLAgendaHeaderView : BLBorderView
 
 - (instancetype)initWithDateVM:(BLDateViewModel *)dateVM;
 

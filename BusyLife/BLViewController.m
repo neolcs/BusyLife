@@ -9,14 +9,16 @@
 #import "BLViewController.h"
 #import "BLScrollView.h"
 #import "UIView+Common.h"
-#import "Calendar/BLCalendarSetionInfo.h"
-#import "Calendar/BLWeekCellView.h"
+#import "BLCalendarSetionInfo.h"
+#import "BLWeekCellView.h"
 #import "BLAgendaSectionInfo.h"
 #import "BLDataProvider.h"
 #import "BLEventCellView.h"
 #import "BLNullEventCellView.h"
 #import "BLAgendaHeaderView.h"
 #import "BLCalendarHeaderView.h"
+
+#import "NSDate+Helper.h"
 
 @interface BLViewController ()<BLScrollViewDelegate, BLScrollViewDataSource>
 
@@ -45,7 +47,7 @@
     calendarView.topSectionInfo = [BLCalendarSetionInfo current];
     self.calendarView = calendarView;
     
-    BLScrollView* agendaView = [[BLScrollView alloc] initWithFrame:CGRectMake(0, calendarView.bottom, self.view.width, 300.f)];
+    BLScrollView* agendaView = [[BLScrollView alloc] initWithFrame:CGRectMake(0, calendarView.bottom, self.view.width, self.view.height - calendarView.bottom)];
     agendaView.clipsToBounds = YES;
     agendaView.delegate = self;
     agendaView.dataSource = self;
@@ -74,7 +76,8 @@
 }
 
 #pragma mark - BLScrollViewDelegate
-- (void)cellWillBeRemoved:(UIView *)cell{
+- (void)scrollView:(BLScrollView *)scrollView sectionWillBeRemoved:(id<BLSectionInfo>)sectionInfo{
+    //TODO: add logic here to deal with removement of a section
 }
 
 - (void)scrollView:(BLScrollView *)scrollView topSectionChanged:(id<BLSectionInfo>)sectionInfo {
@@ -83,6 +86,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:BLDayGridViewHighlight object:agendaSectionInfo.dateVM];
     }
 }
+
 
 #pragma mark - BLScrollViewDataSource
 - (UIView *)scrollView:(BLScrollView *)scrollView cellForInfo:(id)object{
@@ -129,8 +133,15 @@
     if ([notif.name isEqualToString:BLDayGridViewHighlight]
         && [notif.object isKindOfClass:[BLDateViewModel class]]) {
         BLDateViewModel* dateVM = (BLDateViewModel *)notif.object;
+        
         BLAgendaSectionInfo* sectionInfo = [[BLAgendaSectionInfo alloc] initWithDateVM:dateVM];
         self.agendaView.topSectionInfo = sectionInfo;
+        
+       
+        BLCalendarSetionInfo* calendarSectionInfo = [[BLCalendarSetionInfo alloc] initWithDate:dateVM.date];
+        if (![self.calendarView.sectionInfoList containsObject:calendarSectionInfo]) {
+            self.calendarView.topSectionInfo = calendarSectionInfo;
+        }
     }
 }
 

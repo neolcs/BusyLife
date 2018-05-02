@@ -7,6 +7,7 @@
 //
 
 #import "BLCalendarSetionInfo.h"
+#import "NSDate+Helper.h"
 
 @implementation BLCalendarSetionInfo
 
@@ -25,13 +26,30 @@
 - (instancetype)initWithStartDate:(NSDate *)startDate {
     self = [super init];
     if (self) {
-        _startDate = startDate;
+        _startDate = [startDate resetTo0];
         
         NSMutableArray* tempArray = [NSMutableArray array];
         [tempArray addObject:startDate];
         self.cellInfoArray = tempArray;
     }
     return self;
+}
+
+- (instancetype)initWithDate:(NSDate *)date{
+    NSCalendar* cal = [NSCalendar currentCalendar];
+    NSDateComponents* comp = [cal components:NSCalendarUnitWeekday fromDate:date];
+    NSDate* startDate = [NSDate dateWithTimeInterval:(1-comp.weekday)*24*60*60 sinceDate:date];
+    
+    return [self initWithStartDate:startDate];
+}
+
+- (BOOL)isEqual:(id)object{
+    if (![object isKindOfClass:[BLCalendarSetionInfo class]]) {
+        return false;
+    }
+    
+    BLCalendarSetionInfo* another = (BLCalendarSetionInfo *)object;
+    return [self.startDate isEqual:another.startDate];
 }
 
 - (BLCalendarSetionInfo *)previous{

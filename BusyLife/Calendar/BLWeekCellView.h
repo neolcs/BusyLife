@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BLBorderView.h"
 
-@interface BLWeekCellView : UIView
+@interface BLWeekCellView : BLBorderView
 
 - (instancetype)initWithStartDate:(NSDate *)startDate;
 

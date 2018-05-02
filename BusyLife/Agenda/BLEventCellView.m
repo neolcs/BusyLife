@@ -119,12 +119,12 @@
     [self.rangeLabel.widthAnchor constraintEqualToConstant:60.f].active = true;
     [self.rangeLabel.heightAnchor constraintEqualToConstant:20.f].active = true;
     
-    [self.typeView.leadingAnchor constraintEqualToAnchor:self.startLabel.trailingAnchor constant:10.f].active = true;
+    [self.typeView.leadingAnchor constraintEqualToAnchor:self.startLabel.trailingAnchor constant:8.f].active = true;
     [self.typeView.topAnchor constraintEqualToAnchor:self.topAnchor constant:12.f].active = true;
     [self.typeView.widthAnchor constraintEqualToConstant:10.f].active = true;
     [self.typeView.heightAnchor constraintEqualToConstant:10.f].active = true;
     
-    [self.titleLabel.leadingAnchor constraintEqualToAnchor:self.typeView.trailingAnchor constant:10.f].active = true;
+    [self.titleLabel.leadingAnchor constraintEqualToAnchor:self.typeView.trailingAnchor constant:15.f].active = true;
     [self.titleLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:5.f].active = true;
     [self.titleLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-7.f].active = true;
     [self.titleLabel.heightAnchor constraintEqualToConstant:25.f].active = true;

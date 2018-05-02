@@ -64,15 +64,20 @@
     
     if (!self.topSectionInfo) return;
     
+    NSMutableArray* sectionList = [NSMutableArray array];
     id<BLSectionInfo> current = self.topSectionInfo;
-    
+    [sectionList addObject:current];
     BLSectionView* sectionView = [self sectionViewFor:current];
     [self _pushSection:sectionView];
     while (sectionView.bottom < self.height) {
         current = [current next];
         sectionView = [self sectionViewFor:current];
         [self _pushSection:sectionView];
+        
+        [sectionList addObject:current];
     }
+    
+    _sectionInfoList = sectionList;
 }
 
 - (BLSectionView *)sectionViewFor:(id<BLSectionInfo>)sectionInfo{
@@ -224,9 +229,6 @@
         if (!CGRectIntersectsRect(self.bounds, sectionView.frame)) {
             [sectionView removeFromSuperview];
             [toRemoveArray addObject:sectionView];
-            if ([self.delegate respondsToSelector:@selector(scrollView:sectionWillBeRemoved:)]) {
-                [self.delegate scrollView:self topSectionChanged:sectionView.sectionInfo];
-            }
         }
     }
     [self.sectionViewArray removeObjectsInArray:toRemoveArray];
@@ -261,6 +263,7 @@
         BLSectionView* sectionView = [self.sectionViewArray objectAtIndex:0];
         if (![_topSectionInfo isEqual:sectionView.sectionInfo]) {
             _topSectionInfo = sectionView.sectionInfo;
+            
             if ([self.delegate respondsToSelector:@selector(scrollView:topSectionChanged:)]) {
                 [self.delegate scrollView:self topSectionChanged:self.topSectionInfo];
             }

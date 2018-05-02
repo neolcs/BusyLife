@@ -12,7 +12,7 @@
 
 - (NSDate *)resetTo0{
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"YYYY-MM-DD";
+    formatter.dateFormat = @"YYYY-MM-dd";
     return [formatter dateFromString:[formatter stringFromDate:self]];
 }
 
@@ -26,6 +26,12 @@
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"EEEE, MMMM d";
     return [[formatter stringFromDate:self] uppercaseString];
+}
+
+- (NSString *)format{
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"YYYY-MM-dd";
+    return [formatter stringFromDate:self];
 }
 
 @end

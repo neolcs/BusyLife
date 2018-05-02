@@ -13,5 +13,6 @@
 - (NSDate *)resetTo0;
 - (NSString *)dayTime;
 - (NSString *)headerDisplay;
+- (NSString *)format;
 
 @end

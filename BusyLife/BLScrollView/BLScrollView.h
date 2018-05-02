@@ -13,6 +13,8 @@
 @class BLScrollView;
 @protocol BLScrollViewDelegate<NSObject>
 
+@optional
+- (void)scrollViewDidScroll:(BLScrollView *)scrollView;
 - (void)scrollView:(BLScrollView *)scrollView sectionWillBeRemoved:(id<BLSectionInfo>)sectionInfo;       //called when the section is out of the visible rect, hence is remove from BLScrollView
 
 //the delegate method called when the top most section changed to another info
@@ -39,6 +41,8 @@
 //Since BLScrollView could scroll up and down infinitely, the indexPath is not valid here, we use the topCellInfo as the anchor for current state
 //The topCellInfo must be set, or nothing would show up
 @property (nonatomic, strong) id<BLSectionInfo> topSectionInfo;
+
+@property (nonatomic, readonly) NSArray* sectionInfoList;
 
 //Similar to UITableView, when topCellInfo is changed or view size change is changed, call this method to reload data
 - (void)reloadData;
