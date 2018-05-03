@@ -24,8 +24,14 @@
 
 @property (nonatomic, strong) BLScrollView* calendarView;
 @property (nonatomic, strong) BLScrollView* agendaView;
+@property (nonatomic, strong) BLCalendarHeaderView* calendarHeaderView;
+
+@property (nonatomic, strong) NSLayoutConstraint* foldLayout;
+@property (nonatomic, strong) NSLayoutConstraint* expandLayout;
 
 - (void)_currentDateVMChanged:(NSNotification *)notif;
+- (void)_addViews;
+- (void)_addConstraints;
 
 @end
 
@@ -36,32 +42,22 @@
     
     [[BLDataProvider sharedInstance] loadData];
     
-    BLCalendarHeaderView* calendarHeaderView = [[BLCalendarHeaderView alloc] initWithFrame:CGRectMake(0, 20, self.view.width, 40.f)];
-    [self.view addSubview:calendarHeaderView];
+    [self _addViews];
+    [self _addConstraints];
     
-    BLScrollView* calendarView = [[BLScrollView alloc] initWithFrame:CGRectMake(0, calendarHeaderView.bottom, self.view.width, 240.f)];
-    [self.view addSubview:calendarView];
-    calendarView.clipsToBounds = YES;
-    calendarView.delegate = self;
-    calendarView.dataSource = self;
-    calendarView.topSectionInfo = [BLCalendarSetionInfo current];
-    self.calendarView = calendarView;
     
-    BLScrollView* agendaView = [[BLScrollView alloc] initWithFrame:CGRectMake(0, calendarView.bottom, self.view.width, self.view.height - calendarView.bottom)];
-    agendaView.clipsToBounds = YES;
-    agendaView.delegate = self;
-    agendaView.dataSource = self;
-    agendaView.topSectionInfo = [BLAgendaSectionInfo current];
-    [self.view addSubview:agendaView];
-    self.agendaView = agendaView;
-    
-    [self.calendarView reloadData];
-    [self.agendaView reloadData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(_currentDateVMChanged:)
                                                  name:BLDayGridViewHighlight
                                                object:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self.calendarView reloadData];
+    [self.agendaView reloadData];
 }
 
 - (void)updateViewConstraints {
@@ -89,7 +85,31 @@
 }
 
 - (void)scrollViewDidStartScroll:(BLScrollView *)scrollView {
-    
+    if (self.calendarView == scrollView) {
+        self.foldLayout.active = false;
+        self.expandLayout.active = true;
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.view layoutIfNeeded];
+        }];
+    }
+    if (self.agendaView == scrollView) {
+        self.expandLayout.active = false;
+        self.foldLayout.active = true;
+        
+        //Will Make CalendarView fold up, should check the select day grid is in the top 2 rows, otherwise change the CalendarView's topSection.
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.view layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            BLAgendaSectionInfo* agendaSectionInfo = [self.agendaView currentSection];
+            BLCalendarSetionInfo* calendarSectionInfo = [self.calendarView currentSection];
+            NSTimeInterval interval = [agendaSectionInfo.dateVM.date timeIntervalSinceDate:calendarSectionInfo.startDate];
+            if (interval < 0 || interval > 13*24*60*60) {
+                BLCalendarSetionInfo* sectionInfo = [[BLCalendarSetionInfo alloc] initWithDate:agendaSectionInfo.dateVM.date];
+                self.calendarView.topSectionInfo = sectionInfo;
+            }
+        }];
+    }
 }
 
 - (void)scrollView:(BLScrollView *)scrollView sectionWillBeRemoved:(id<BLSectionInfo>)sectionInfo{
@@ -102,7 +122,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:BLDayGridViewHighlight object:agendaSectionInfo.dateVM];
     }
 }
-
 
 #pragma mark - BLScrollViewDataSource
 - (UIView *)scrollView:(BLScrollView *)scrollView cellForInfo:(id)object{
@@ -161,6 +180,53 @@
         }
         self.calendarView.topSectionInfo = calendarSectionInfo;
     }
+}
+
+- (void)_addViews {
+    BLCalendarHeaderView* calendarHeaderView = [[BLCalendarHeaderView alloc] init];
+    calendarHeaderView.translatesAutoresizingMaskIntoConstraints = false;
+    [self.view addSubview:calendarHeaderView];
+    self.calendarHeaderView = calendarHeaderView;
+    
+    BLScrollView* calendarView = [[BLScrollView alloc] init];
+    calendarView.tag = 0;
+    calendarView.translatesAutoresizingMaskIntoConstraints = false;
+    [self.view addSubview:calendarView];
+    calendarView.clipsToBounds = YES;
+    calendarView.delegate = self;
+    calendarView.dataSource = self;
+    calendarView.topSectionInfo = [BLCalendarSetionInfo current];
+    self.calendarView = calendarView;
+    
+    BLScrollView* agendaView = [[BLScrollView alloc] init];
+    agendaView.tag = 1;
+    agendaView.translatesAutoresizingMaskIntoConstraints = false;
+    agendaView.clipsToBounds = YES;
+    agendaView.delegate = self;
+    agendaView.dataSource = self;
+    agendaView.topSectionInfo = [BLAgendaSectionInfo current];
+    [self.view addSubview:agendaView];
+    self.agendaView = agendaView;
+}
+
+- (void)_addConstraints {
+    [self.calendarHeaderView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:20.f].active = true;
+    [self.calendarHeaderView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = true;
+    [self.calendarHeaderView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = true;
+    [self.calendarHeaderView.heightAnchor constraintEqualToConstant:40.f].active = true;
+    
+    [self.calendarView.topAnchor constraintEqualToAnchor:self.calendarHeaderView.bottomAnchor].active = true;
+    [self.calendarView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = true;
+    [self.calendarView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = true;
+    self.foldLayout = [self.calendarView.heightAnchor constraintEqualToConstant:80.f];
+    self.expandLayout = [self.calendarView.heightAnchor constraintEqualToConstant:240.f];
+    
+    [self.agendaView.topAnchor constraintEqualToAnchor:self.calendarView.bottomAnchor].active = true;
+    [self.agendaView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = true;
+    [self.agendaView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = true;
+    [self.agendaView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = true;
+    
+    self.foldLayout.active = true;
 }
 
 @end

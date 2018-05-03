@@ -35,6 +35,7 @@
 - (void)_panMe:(UIPanGestureRecognizer *)pan;
 - (void)_translateView:(CGPoint)point;
 
+- (void)_scrollStarted;
 - (void)_scrollStopped;
 
 @end
@@ -50,7 +51,7 @@
 }
 
 - (void)setTopSectionInfo:(id<BLSectionInfo>)topSectionInfo {
-    if ([_topSectionInfo isEqual:topSectionInfo]) {
+    if ([[self currentSection] isEqual:topSectionInfo]) {
         return;
     }
     BOOL shouldAutoReload = _topSectionInfo != nil;
@@ -137,6 +138,16 @@
     [self _resumeTimer];
 }
 
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change context:(nullable void *)context {
+    if ([keyPath isEqualToString:@"bounds"]) {
+//        [self reloadData];
+    }
+}
+
+- (void)dealloc {
+    [self removeObserver:self forKeyPath:@"bounds"];
+}
+
 #pragma mark - Private Method
 - (void)_setup {
     self.sectionViewArray = [NSMutableArray array];
@@ -145,6 +156,7 @@
     UIPanGestureRecognizer* pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(_panMe:)];
     [self addGestureRecognizer:pan];
     
+    [self addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
     [self _setupTimer];
 }
 
@@ -224,6 +236,10 @@
 
 #pragma mark - Pan Guesture Event Handler
 - (void)_panMe:(UIPanGestureRecognizer *)pan{
+    if (pan.state == UIGestureRecognizerStateBegan) {
+        [self _scrollStarted];
+    }
+    
     CGPoint rawPoint = [pan translationInView:self];
     CGPoint rawVelocity = [pan velocityInView:self];
     
@@ -311,13 +327,25 @@
     }
 }
 
+- (void)_scrollStarted {
+    if (_scrolling) {
+        return;
+    }
+
+    _scrolling = true;
+    if ([self.delegate respondsToSelector:@selector(scrollViewDidStartScroll:)]) {
+        [self.delegate scrollViewDidStartScroll:self];
+    }
+}
+
 - (void)_scrollStopped{
+    _scrolling = false;
+    
     if ([self.delegate respondsToSelector:@selector(scrollViewDidStopScroll:)]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.delegate scrollViewDidStopScroll:self];
         });
     }
 }
-
 
 @end
