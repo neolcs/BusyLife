@@ -42,6 +42,9 @@
 }
 
 - (int)lineNumber {
+    if (self.highlight) {
+        return 1;
+    }
     NSCalendar* calender = [NSCalendar currentCalendar];
     NSInteger day = [calender component:NSCalendarUnitDay fromDate:self.date];
     return day == 1 ? 2 : 1;
