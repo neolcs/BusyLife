@@ -78,4 +78,14 @@
     return self.height >= cellHeight + headerHeight;
 }
 
+- (CGFloat)fullHeight {
+    CGFloat cellHeight = 0.f;
+    for (UIView* cell in self.cellArray){
+        cellHeight += cell.height;
+    }
+    CGFloat headerHeight = self.header.height;
+    
+    return cellHeight + headerHeight;
+}
+
 @end

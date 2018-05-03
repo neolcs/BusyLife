@@ -16,16 +16,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BusyLife/BLScrollView/BLScrollView.m"
-            timestampString = "546932669.8457659"
+            filePath = "BusyLife/Calendar/BLCalendarSetionInfo.m"
+            timestampString = "547005859.930956"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "-setTopSectionInfo:"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "-isEqual:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

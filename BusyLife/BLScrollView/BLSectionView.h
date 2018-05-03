@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSArray* cellArray;
 @property (nonatomic, strong) id<BLSectionInfo> sectionInfo;
 @property (nonatomic, readonly) BOOL fullExpanded;
+@property (nonatomic, readonly) CGFloat fullHeight;
 
 
 //reorganize the cells and header with respect to the size

@@ -39,7 +39,7 @@
     BLCalendarHeaderView* calendarHeaderView = [[BLCalendarHeaderView alloc] initWithFrame:CGRectMake(0, 20, self.view.width, 40.f)];
     [self.view addSubview:calendarHeaderView];
     
-    BLScrollView* calendarView = [[BLScrollView alloc] initWithFrame:CGRectMake(0, calendarHeaderView.bottom, self.view.width, 160.f)];
+    BLScrollView* calendarView = [[BLScrollView alloc] initWithFrame:CGRectMake(0, calendarHeaderView.bottom, self.view.width, 240.f)];
     [self.view addSubview:calendarView];
     calendarView.clipsToBounds = YES;
     calendarView.delegate = self;
@@ -76,6 +76,22 @@
 }
 
 #pragma mark - BLScrollViewDelegate
+- (void)scrollViewDidStopScroll:(BLScrollView *)scrollView {
+    if (scrollView == self.calendarView) {
+        BLSectionView* topSection = [scrollView.sectionViewArray objectAtIndex:0];
+        if (topSection.fullExpanded) {
+            return;
+        }
+        
+        CGFloat distance = topSection.height < topSection.fullHeight - topSection.height ? -topSection.height :  (topSection.fullHeight - topSection.height);
+        [scrollView scrollOffset:CGPointMake(0, distance) animated:YES];
+    }
+}
+
+- (void)scrollViewDidStartScroll:(BLScrollView *)scrollView {
+    
+}
+
 - (void)scrollView:(BLScrollView *)scrollView sectionWillBeRemoved:(id<BLSectionInfo>)sectionInfo{
     //TODO: add logic here to deal with removement of a section
 }
@@ -137,11 +153,13 @@
         BLAgendaSectionInfo* sectionInfo = [[BLAgendaSectionInfo alloc] initWithDateVM:dateVM];
         self.agendaView.topSectionInfo = sectionInfo;
         
-       
         BLCalendarSetionInfo* calendarSectionInfo = [[BLCalendarSetionInfo alloc] initWithDate:dateVM.date];
-        if (![self.calendarView.sectionInfoList containsObject:calendarSectionInfo]) {
-            self.calendarView.topSectionInfo = calendarSectionInfo;
+        for (BLSectionView* sectionView in self.calendarView.sectionViewArray) {
+            if ([sectionView.sectionInfo isEqual:calendarSectionInfo]) {
+                return;
+            }
         }
+        self.calendarView.topSectionInfo = calendarSectionInfo;
     }
 }
 

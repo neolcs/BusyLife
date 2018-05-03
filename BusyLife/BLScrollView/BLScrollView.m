@@ -8,6 +8,8 @@
 
 #import "BLScrollView.h"
 #import "UIView+Common.h"
+#import "BLCalendarSetionInfo.h"
+#import "NSDate+Helper.h"
 
 #define BLINITIALSPEED  (40)
 
@@ -15,12 +17,12 @@
 
 @property (nonatomic, strong) dispatch_source_t timer;
 @property (nonatomic, assign) BOOL isDecelerating;
-@property (nonatomic, assign) CGPoint velocity;
-@property (nonatomic, strong) NSMutableArray* sectionViewArray;
 @property (nonatomic, strong) NSMutableDictionary* sectionViewDict;
-
 //TODO: make use of backupCellArray 
 @property (nonatomic, strong) NSMutableArray* backupCellArray;
+
+@property (nonatomic, assign) CGPoint targetOffset;
+@property (nonatomic, assign) BOOL autoScroll;
 
 - (void)_setup;
 
@@ -32,6 +34,8 @@
 
 - (void)_panMe:(UIPanGestureRecognizer *)pan;
 - (void)_translateView:(CGPoint)point;
+
+- (void)_scrollStopped;
 
 @end
 
@@ -56,6 +60,14 @@
     }
 }
 
+- (id<BLSectionInfo>)currentSection {
+    if ([self.sectionViewArray count] <= 0) {
+        return nil;
+    }
+    BLSectionView* sectionView = [self.sectionViewArray objectAtIndex:0];
+    return sectionView.sectionInfo;
+}
+
 - (void)reloadData {
     for (UIView* subView in self.sectionViewArray){
         [subView removeFromSuperview];
@@ -64,20 +76,15 @@
     
     if (!self.topSectionInfo) return;
     
-    NSMutableArray* sectionList = [NSMutableArray array];
     id<BLSectionInfo> current = self.topSectionInfo;
-    [sectionList addObject:current];
     BLSectionView* sectionView = [self sectionViewFor:current];
     [self _pushSection:sectionView];
     while (sectionView.bottom < self.height) {
         current = [current next];
         sectionView = [self sectionViewFor:current];
         [self _pushSection:sectionView];
-        
-        [sectionList addObject:current];
     }
     
-    _sectionInfoList = sectionList;
 }
 
 - (BLSectionView *)sectionViewFor:(id<BLSectionInfo>)sectionInfo{
@@ -113,6 +120,23 @@
     return sectionView;
 }
 
+- (void)scrollOffset:(CGPoint)offset animated:(BOOL)animated {
+    float distance = fabs(offset.y);
+    if (distance <= 0.f) {
+        return;
+    }
+    
+    float speed = distance / ceil(distance);
+    if (offset.y < 0) {
+        speed = -speed;
+    }
+    
+    self.velocity = CGPointMake(self.velocity.x, speed);
+    self.targetOffset = offset;
+    self.autoScroll = true;
+    [self _resumeTimer];
+}
+
 #pragma mark - Private Method
 - (void)_setup {
     self.sectionViewArray = [NSMutableArray array];
@@ -130,15 +154,32 @@
     self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
     dispatch_source_set_timer(self.timer, dispatch_walltime(NULL, 0), 5 * NSEC_PER_MSEC, 0);
     dispatch_source_set_event_handler(self.timer, ^{
-        if (fabs(self.velocity.y) < 1) {
-            self.velocity = CGPointZero;
-            [self _suspendTimer];
+        if (self.autoScroll) {
+            if (self.targetOffset.y * self.velocity.y > 0) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self _translateView:self.velocity];
+                    self.targetOffset = CGPointMake(0, self.targetOffset.y - self.velocity.y);
+                });
+            }
+            else {
+                self.autoScroll = false;
+                [self _suspendTimer];
+            }
+        }
+        else {
+            if (fabs(self.velocity.y) < 1) {
+                self.velocity = CGPointZero;
+                [self _suspendTimer];
+                 [self _scrollStopped];
+            }
+            else{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self _translateView:self.velocity];
+                });
+                self.velocity = CGPointMake(self.velocity.x, self.velocity.y / 1.05);
+            }
         }
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self _translateView:self.velocity];
-        });
-        self.velocity = CGPointMake(self.velocity.x, self.velocity.y / 1.05);
 //        NSLog(@"decelerate, velocity x:%.2f, y:%.2f", self.velocity.x, self.velocity.y);
     });
 }
@@ -157,11 +198,6 @@
     }
     self.isDecelerating = NO;
     dispatch_suspend(self.timer);
-    
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        NSLog(@"first Section Bottom:%.2f", [[self.sectionViewArray objectAtIndex:0] bottom]);
-//        NSLog(@"second section Bottom:%.2f", [[self.sectionViewArray objectAtIndex:1] top]);
-//    });
 }
 
 #pragma mark - Cell Management
@@ -195,16 +231,18 @@
     CGPoint velocity = CGPointMake(floor(rawVelocity.x), floor(rawVelocity.y));
     [self _translateView:point];
     
-    if (pan.state == UIGestureRecognizerStateEnded && fabs(velocity.y) > 0) {
-//        NSLog(@"init velocity, x:%.2f, y:%.2f", velocity.x, velocity.y);
+    if (pan.state == UIGestureRecognizerStateEnded) {
         CGFloat vy = floor(sqrt(fabs(velocity.y)));
         if (velocity.y < 0) {
             vy = -vy;
         }
-//        NSLog(@"sqrt velocity, x:%.2f, y:%.2f", velocity.x, vy);
         if (fabs(vy) > 10.f) {
             self.velocity = CGPointMake(velocity.x, vy);
+            self.autoScroll = false;
             [self _resumeTimer];
+        }
+        else {
+            [self _scrollStopped];
         }
     }
     else{
@@ -221,14 +259,16 @@
     NSMutableArray* toRemoveArray = [NSMutableArray array];
     for (BLSectionView* sectionView in self.sectionViewArray){
         sectionView.top = sectionView.top + point.y;
-        if (sectionView.top < 0 && sectionView.bottom > 0) {
-            [sectionView accomodateInSize:CGSizeMake(0, sectionView.bottom)];
-            sectionView.top = 0;
-        }
         
         if (!CGRectIntersectsRect(self.bounds, sectionView.frame)) {
             [sectionView removeFromSuperview];
             [toRemoveArray addObject:sectionView];
+            continue;
+        }
+        
+        if (sectionView.top < 0 && sectionView.bottom > 0) {
+            [sectionView accomodateInSize:CGSizeMake(0, sectionView.bottom)];
+            sectionView.top = 0;
         }
     }
     [self.sectionViewArray removeObjectsInArray:toRemoveArray];
@@ -270,5 +310,14 @@
         }
     }
 }
+
+- (void)_scrollStopped{
+    if ([self.delegate respondsToSelector:@selector(scrollViewDidStopScroll:)]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate scrollViewDidStopScroll:self];
+        });
+    }
+}
+
 
 @end

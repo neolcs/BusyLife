@@ -14,7 +14,8 @@
 @protocol BLScrollViewDelegate<NSObject>
 
 @optional
-- (void)scrollViewDidScroll:(BLScrollView *)scrollView;
+- (void)scrollViewDidStartScroll:(BLScrollView *)scrollView;
+- (void)scrollViewDidStopScroll:(BLScrollView *)scrollView;
 - (void)scrollView:(BLScrollView *)scrollView sectionWillBeRemoved:(id<BLSectionInfo>)sectionInfo;       //called when the section is out of the visible rect, hence is remove from BLScrollView
 
 //the delegate method called when the top most section changed to another info
@@ -42,10 +43,13 @@
 //The topCellInfo must be set, or nothing would show up
 @property (nonatomic, strong) id<BLSectionInfo> topSectionInfo;
 
-@property (nonatomic, readonly) NSArray* sectionInfoList;
+@property (nonatomic, strong) NSMutableArray* sectionViewArray;
+@property (nonatomic, assign) CGPoint velocity;
 
 //Similar to UITableView, when topCellInfo is changed or view size change is changed, call this method to reload data
 - (void)reloadData;
 - (BLSectionView *)sectionViewFor:(id<BLSectionInfo>)sectionInfo;
+- (id<BLSectionInfo>)currentSection;
+- (void)scrollOffset:(CGPoint)offset animated:(BOOL)animated;
 
 @end
