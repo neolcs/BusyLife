@@ -8,6 +8,7 @@
 
 #import "BLEventCellView.h"
 #import "BLAttender.h"
+#import "BLWeatherView.h"
 #import "UIView+Common.h"
 
 @interface BLEventCellView()
@@ -20,6 +21,7 @@
 @property (nonatomic, strong) UIImageView* anchorView;
 @property (nonatomic, strong) UIView* iconBackView;
 @property (nonatomic, strong) UILabel* locationLabel;
+@property (nonatomic, strong) BLWeatherView* weatherView;
 
 - (void)_addViews;
 - (void)_addConstraints;
@@ -106,6 +108,11 @@
     locationLabel.text = self.eventVM.location;
     [self addSubview:locationLabel];
     self.locationLabel = locationLabel;
+    
+    BLWeatherView* weatherView = [[BLWeatherView alloc] init];
+    [self addSubview:weatherView];
+    self.weatherView = weatherView;
+    [self.weatherView displayWeatcherForDate:self.eventVM.event.startDate atLocation:self.eventVM.event.location];
 }
 
 - (void)_addConstraints {
@@ -118,6 +125,11 @@
     [self.rangeLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:7.f].active = true;
     [self.rangeLabel.widthAnchor constraintEqualToConstant:60.f].active = true;
     [self.rangeLabel.heightAnchor constraintEqualToConstant:20.f].active = true;
+    
+    [self.weatherView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:7.f].active = true;
+    [self.weatherView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-5.f].active = true;
+    [self.weatherView.widthAnchor constraintEqualToConstant:30.f].active = true;
+    [self.weatherView.heightAnchor constraintEqualToConstant:30.f].active = true;
     
     [self.typeView.leadingAnchor constraintEqualToAnchor:self.startLabel.trailingAnchor constant:8.f].active = true;
     [self.typeView.topAnchor constraintEqualToAnchor:self.topAnchor constant:12.f].active = true;

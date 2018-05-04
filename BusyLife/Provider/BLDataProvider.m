@@ -15,7 +15,11 @@
 
 @property (nonatomic, strong) NSMutableArray* eventArray;
 @property (nonatomic, strong) NSMutableArray* dateVMArray;
+@property (nonatomic, strong) NSDictionary* weatherDict;
 
+- (NSDictionary *)_readCachedWeather;
+- (void)_saveWeatherToCache:(NSDictionary *)dict;
+- (NSString *)_cacheFilePath;
 - (void)_fillDateVMWithDate:(NSDate *)date;
 - (void)_timezoneChanged:(NSNotification *)notif;
 
@@ -37,6 +41,9 @@
     if (self) {
         self.dateVMArray = [NSMutableArray array];
         self.eventArray = [NSMutableArray array];
+        
+        self.weatherDict = [self _readCachedWeather];
+        _session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(_timezoneChanged:)
@@ -92,6 +99,40 @@
         }
     }
     return [self.dateVMArray objectAtIndex:i];
+}
+
+- (BLWeather *)weatherForDate:(NSDate *)date {
+    return [self.weatherDict objectForKey:date];
+}
+
+- (void)saveWeather:(BLWeather *)weather{
+    if (!weather) {
+        return;
+    }
+    
+    @synchronized(self){
+        NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithDictionary:self.weatherDict];
+        [dict setObject:weather forKey:weather.time];
+        self.weatherDict = dict;
+        
+        [self _saveWeatherToCache:self.weatherDict];
+    }
+}
+
+- (void)saveWeatherArray:(NSArray *)weatherArray{
+    @synchronized(self){
+        NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+        for (BLWeather *weather in weatherArray){
+            if (![weather isKindOfClass:[BLWeather class]]) continue;
+            [dict setObject:weather forKey:weather.time];
+        }
+        if ([dict count] <= 0) {
+            return;
+        }
+        [dict addEntriesFromDictionary:self.weatherDict];
+        self.weatherDict = dict;
+        [self _saveWeatherToCache:self.weatherDict];
+    }
 }
 
 - (void)dealloc {
@@ -168,6 +209,25 @@
 
 - (void)_timezoneChanged:(NSNotification *)notif{
     [self.dateVMArray removeAllObjects];
+}
+
+- (NSString *)_cacheFilePath{
+    NSArray* documents = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* documentPath = documents[0];
+    return [documentPath stringByAppendingPathComponent:@"weathers"];
+}
+
+- (NSDictionary *)_readCachedWeather{
+    NSDictionary* weatherDict = [NSKeyedUnarchiver unarchiveObjectWithFile:[self _cacheFilePath]];
+    return weatherDict;
+}
+
+- (void)_saveWeatherToCache:(NSDictionary *)dict{
+    if (!dict) {
+        return;
+    }
+    
+    [NSKeyedArchiver archiveRootObject:dict toFile:[self _cacheFilePath]];
 }
 
 @end

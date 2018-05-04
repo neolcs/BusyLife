@@ -40,6 +40,7 @@
 		623E90BC209B0DDE0021E825 /* BLDateViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E90BB209B0DDE0021E825 /* BLDateViewModelTests.m */; };
 		62CF027C209C13F90048989E /* BLLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 62CF027B209C13F90048989E /* BLLocation.m */; };
 		62CF027F209C22220048989E /* BLWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = 62CF027E209C22220048989E /* BLWeather.m */; };
+		62CF0283209C33BC0048989E /* BLWeatherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 62CF0282209C33BC0048989E /* BLWeatherView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,8 @@
 		62CF027B209C13F90048989E /* BLLocation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLLocation.m; sourceTree = "<group>"; };
 		62CF027D209C22220048989E /* BLWeather.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLWeather.h; sourceTree = "<group>"; };
 		62CF027E209C22220048989E /* BLWeather.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLWeather.m; sourceTree = "<group>"; };
+		62CF0281209C33BC0048989E /* BLWeatherView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLWeatherView.h; sourceTree = "<group>"; };
+		62CF0282209C33BC0048989E /* BLWeatherView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLWeatherView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +176,7 @@
 		6235C5662090BFED007053AE /* BusyLife */ = {
 			isa = PBXGroup;
 			children = (
+				62CF0280209C33A20048989E /* Weather */,
 				623E90B420976FB30021E825 /* Base */,
 				6235C5BC2092037E007053AE /* Calendar */,
 				623E909820946F6D0021E825 /* Agenda */,
@@ -305,6 +309,15 @@
 				623E90B620976FC10021E825 /* BLBorderView.m */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		62CF0280209C33A20048989E /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+				62CF0281209C33BC0048989E /* BLWeatherView.h */,
+				62CF0282209C33BC0048989E /* BLWeatherView.m */,
+			);
+			path = Weather;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -450,6 +463,7 @@
 				6235C5C82092CA9F007053AE /* BLDayGridView.m in Sources */,
 				6235C5BF209203CA007053AE /* BLCalendarSetionInfo.m in Sources */,
 				623E90A72094EAB70021E825 /* BLEventViewModel.m in Sources */,
+				62CF0283209C33BC0048989E /* BLWeatherView.m in Sources */,
 				623E9087209439940021E825 /* BLAttender.m in Sources */,
 				623E90BA209776100021E825 /* BLCalendarHeaderView.m in Sources */,
 				623E9092209450870021E825 /* BLParser.m in Sources */,
