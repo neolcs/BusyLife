@@ -103,7 +103,7 @@
     locationLabel.translatesAutoresizingMaskIntoConstraints = false;
     locationLabel.font = [UIFont systemFontOfSize:12.f];
     locationLabel.textColor = [UIColor colorWithWhite:0.3 alpha:0.5];
-    locationLabel.text = self.eventVM.event.location;
+    locationLabel.text = self.eventVM.location;
     [self addSubview:locationLabel];
     self.locationLabel = locationLabel;
 }

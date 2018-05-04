@@ -57,4 +57,19 @@
     return [UIColor magentaColor];
 }
 
+- (NSString *)location {
+    if (!self.event.location) {
+        return nil;
+    }
+    
+    NSMutableArray* parts = [NSMutableArray array];
+    if (self.event.location.city) {
+        [parts addObject:self.event.location.city];
+    }
+    if (self.event.location.name) {
+        [parts addObject:self.event.location.name];
+    }
+    return [parts componentsJoinedByString:@", "];
+}
+
 @end

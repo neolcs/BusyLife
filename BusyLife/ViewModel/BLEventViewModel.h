@@ -17,6 +17,7 @@
 @property (nonatomic, readonly) NSString* startTime;
 @property (nonatomic, readonly) NSString* range;
 @property (nonatomic, readonly) UIColor* typeColor;
+@property (nonatomic, readonly) NSString* location;
 
 - (instancetype)initWithEvent:(BLEvent *)event;
 

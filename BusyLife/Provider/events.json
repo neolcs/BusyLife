@@ -22,7 +22,12 @@
                       "avatar": "putin"
                   }
       ],
-      "location": "坐忘书房"
+  "location": {
+          "name":"坐忘书房",
+          "city": "苏州",
+          "latitude": 31.3035,
+          "longitude": 120.7396
+        }
     },
   {
       "startDate": 1524888000,
@@ -47,7 +52,12 @@
                       "avatar": "putin"
                   }
                   ],
-      "location": "坐忘书房"
+  "location": {
+          "name":"坐忘书房",
+          "city": "苏州",
+          "latitude": 31.3035,
+          "longitude": 120.7396
+        }
   },
   {
       "startDate": 1524909600,
@@ -72,7 +82,12 @@
                   "avatar": "putin"
                   }
                   ],
-      "location": "坐忘书房"
+  "location": {
+          "name":"坐忘书房",
+          "city": "苏州",
+          "latitude": 31.3035,
+          "longitude": 120.7396
+        }
   },
   {
       "startDate": 1525064400,
@@ -97,7 +112,12 @@
                   "avatar": "putin"
                   }
                   ],
-      "location": "坐忘书房"
+  "location": {
+          "name":"坐忘书房",
+          "city": "苏州",
+          "latitude": 31.3035,
+          "longitude": 120.7396
+        }
   },
   {
       "startDate": 1525086000,
@@ -122,7 +142,12 @@
                   "avatar": "putin"
                   }
                   ],
-      "location": "坐忘书房"
+      "location": {
+          "name":"坐忘书房",
+          "city": "苏州",
+          "latitude": 31.3035,
+          "longitude": 120.7396
+        }
   },
   {
       "startDate": 1525132800,
@@ -147,7 +172,12 @@
                   "avatar": "putin"
                   }
                   ],
-      "location": "坐忘书房"
+  "location": {
+      "name":"坐忘书房",
+      "city": "苏州",
+      "latitude": 31.3035,
+      "longitude": 120.7396
+      }
   },
   {
       "startDate": 1525147200,
@@ -172,7 +202,12 @@
                   "avatar": "putin"
                   }
             ],
-      "location": "坐忘书房"
+      "location": {
+            "name":"坐忘书房",
+            "city": "苏州",
+            "latitude": 31.3035,
+            "longitude": 120.7396
+      }
   },
   {
   "startDate": 1525219200,
@@ -197,6 +232,11 @@
               "avatar": "putin"
               }
               ],
-  "location": "坐忘书房"
+  "location": {
+          "name":"坐忘书房",
+          "city": "苏州",
+          "latitude": 31.3035,
+          "longitude": 120.7396
+        }
   }
 ]

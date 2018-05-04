@@ -72,6 +72,11 @@ typedef void (*objectSetter_t)(id, SEL, id);
                     objectSetter_t setter = (objectSetter_t)imp;
                     setter(object, selector, value);
                 }
+                else if ( [detailType isEqualToString:@"BLLocation"]) {
+                    id location = [self parseDict:[dict objectForKey:key] toClass:NSClassFromString(@"BLLocation")];
+                    objectSetter_t setter = (objectSetter_t)imp;
+                    setter(object, selector, location);
+                }
 				else if ( [detailType isEqualToString:@"NSArray"] ){
 					NSMutableArray* eleArray = [NSMutableArray new];
                     NSArray* valueArray = [dict objectForKey:key];

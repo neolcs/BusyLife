@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BLLocation.h"
 
 @interface BLEvent : NSObject
 
@@ -16,6 +17,6 @@
 @property (nonatomic, strong) NSString* title;
 @property (nonatomic, strong) NSString* desc;
 @property (nonatomic, strong) NSArray* attends;
-@property (nonatomic, strong) NSString* location;
+@property (nonatomic, strong) BLLocation* location;
 
 @end

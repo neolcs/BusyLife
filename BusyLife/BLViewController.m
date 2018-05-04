@@ -45,8 +45,6 @@
     [self _addViews];
     [self _addConstraints];
     
-    
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(_currentDateVMChanged:)
                                                  name:BLDayGridViewHighlight
@@ -73,6 +71,7 @@
 
 #pragma mark - BLScrollViewDelegate
 - (void)scrollViewDidStopScroll:(BLScrollView *)scrollView {
+    //CalendarView should fully display every cell of week. If not, adjust the offset to commit it.
     if (scrollView == self.calendarView) {
         BLSectionView* topSection = [scrollView.sectionViewArray objectAtIndex:0];
         if (topSection.fullExpanded) {
@@ -80,7 +79,7 @@
         }
         
         CGFloat distance = topSection.height < topSection.fullHeight - topSection.height ? -topSection.height :  (topSection.fullHeight - topSection.height);
-        [scrollView scrollOffset:CGPointMake(0, distance) animated:YES];
+        [scrollView scrollOffset:CGPointMake(0, distance) animated:true];
     }
 }
 
@@ -97,7 +96,7 @@
         self.expandLayout.active = false;
         self.foldLayout.active = true;
         
-        //Will Make CalendarView fold up, should check the select day grid is in the top 2 rows, otherwise change the CalendarView's topSection.
+        //CalendarView will fold up.If the current date is in the top 2 rows of the CalendarView, change the CalendarView's topSection.
         [UIView animateWithDuration:0.3 animations:^{
             [self.view layoutIfNeeded];
         } completion:^(BOOL finished) {
@@ -192,7 +191,7 @@
     calendarView.tag = 0;
     calendarView.translatesAutoresizingMaskIntoConstraints = false;
     [self.view addSubview:calendarView];
-    calendarView.clipsToBounds = YES;
+    calendarView.clipsToBounds = true;
     calendarView.delegate = self;
     calendarView.dataSource = self;
     calendarView.topSectionInfo = [BLCalendarSetionInfo current];
@@ -201,7 +200,7 @@
     BLScrollView* agendaView = [[BLScrollView alloc] init];
     agendaView.tag = 1;
     agendaView.translatesAutoresizingMaskIntoConstraints = false;
-    agendaView.clipsToBounds = YES;
+    agendaView.clipsToBounds = true;
     agendaView.delegate = self;
     agendaView.dataSource = self;
     agendaView.topSectionInfo = [BLAgendaSectionInfo current];

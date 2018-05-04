@@ -11,8 +11,6 @@
 #import "BLCalendarSetionInfo.h"
 #import "NSDate+Helper.h"
 
-#define BLINITIALSPEED  (40)
-
 @interface BLScrollView()
 
 @property (nonatomic, strong) dispatch_source_t timer;
@@ -138,16 +136,6 @@
     [self _resumeTimer];
 }
 
-- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change context:(nullable void *)context {
-    if ([keyPath isEqualToString:@"bounds"]) {
-//        [self reloadData];
-    }
-}
-
-- (void)dealloc {
-    [self removeObserver:self forKeyPath:@"bounds"];
-}
-
 #pragma mark - Private Method
 - (void)_setup {
     self.sectionViewArray = [NSMutableArray array];
@@ -156,7 +144,6 @@
     UIPanGestureRecognizer* pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(_panMe:)];
     [self addGestureRecognizer:pan];
     
-    [self addObserver:self forKeyPath:@"bounds" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
     [self _setupTimer];
 }
 
@@ -288,6 +275,11 @@
         }
     }
     [self.sectionViewArray removeObjectsInArray:toRemoveArray];
+    if ([self.delegate respondsToSelector:@selector(scrollView:sectionWillBeRemoved:)]) {
+        for (BLSectionView* sectionView in toRemoveArray){
+            [self.delegate scrollView:self sectionWillBeRemoved:sectionView.sectionInfo];
+        }
+    }
     
     BLSectionView* topSection = [self.sectionViewArray objectAtIndex:0];
     while (topSection.top > 0) {

@@ -38,6 +38,8 @@
 		623E90B720976FC10021E825 /* BLBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E90B620976FC10021E825 /* BLBorderView.m */; };
 		623E90BA209776100021E825 /* BLCalendarHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E90B9209776100021E825 /* BLCalendarHeaderView.m */; };
 		623E90BC209B0DDE0021E825 /* BLDateViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E90BB209B0DDE0021E825 /* BLDateViewModelTests.m */; };
+		62CF027C209C13F90048989E /* BLLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 62CF027B209C13F90048989E /* BLLocation.m */; };
+		62CF027F209C22220048989E /* BLWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = 62CF027E209C22220048989E /* BLWeather.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +119,10 @@
 		623E90B8209776100021E825 /* BLCalendarHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLCalendarHeaderView.h; sourceTree = "<group>"; };
 		623E90B9209776100021E825 /* BLCalendarHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLCalendarHeaderView.m; sourceTree = "<group>"; };
 		623E90BB209B0DDE0021E825 /* BLDateViewModelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLDateViewModelTests.m; sourceTree = "<group>"; };
+		62CF027A209C13F90048989E /* BLLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLLocation.h; sourceTree = "<group>"; };
+		62CF027B209C13F90048989E /* BLLocation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLLocation.m; sourceTree = "<group>"; };
+		62CF027D209C22220048989E /* BLWeather.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLWeather.h; sourceTree = "<group>"; };
+		62CF027E209C22220048989E /* BLWeather.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLWeather.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,10 +174,10 @@
 			isa = PBXGroup;
 			children = (
 				623E90B420976FB30021E825 /* Base */,
+				6235C5BC2092037E007053AE /* Calendar */,
 				623E909820946F6D0021E825 /* Agenda */,
 				623E907E20941B0D0021E825 /* Provider */,
 				623E907620931C4E0021E825 /* ViewModel */,
-				6235C5BC2092037E007053AE /* Calendar */,
 				6235C59D2090C0BB007053AE /* BLScrollView */,
 				6235C5992090C032007053AE /* Category */,
 				6235C5672090BFED007053AE /* AppDelegate.h */,
@@ -251,12 +257,16 @@
 			children = (
 				623E907720931C770021E825 /* BLDateViewModel.h */,
 				623E907820931C770021E825 /* BLDateViewModel.m */,
+				623E90A52094EAB70021E825 /* BLEventViewModel.h */,
+				623E90A62094EAB70021E825 /* BLEventViewModel.m */,
 				623E9082209438F30021E825 /* BLEvent.h */,
 				623E9083209438F30021E825 /* BLEvent.m */,
 				623E9085209439940021E825 /* BLAttender.h */,
 				623E9086209439940021E825 /* BLAttender.m */,
-				623E90A52094EAB70021E825 /* BLEventViewModel.h */,
-				623E90A62094EAB70021E825 /* BLEventViewModel.m */,
+				62CF027A209C13F90048989E /* BLLocation.h */,
+				62CF027B209C13F90048989E /* BLLocation.m */,
+				62CF027D209C22220048989E /* BLWeather.h */,
+				62CF027E209C22220048989E /* BLWeather.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -432,6 +442,7 @@
 				623E90AA2095A9C70021E825 /* BLAgendaSectionInfo.m in Sources */,
 				623E907920931C770021E825 /* BLDateViewModel.m in Sources */,
 				623E90A42094E3FD0021E825 /* BLEventCellView.m in Sources */,
+				62CF027F209C22220048989E /* BLWeather.m in Sources */,
 				6235C56C2090BFED007053AE /* BLViewController.m in Sources */,
 				623E90B0209635B80021E825 /* BLAgendaHeaderView.m in Sources */,
 				6235C5A22090CCBB007053AE /* BLScrollView.m in Sources */,
@@ -445,6 +456,7 @@
 				623E9084209438F30021E825 /* BLEvent.m in Sources */,
 				623E908D209442800021E825 /* NSDate+Helper.m in Sources */,
 				6235C5772090BFEE007053AE /* main.m in Sources */,
+				62CF027C209C13F90048989E /* BLLocation.m in Sources */,
 				6235C5692090BFED007053AE /* AppDelegate.m in Sources */,
 				6235C59C2090C049007053AE /* UIView+Common.m in Sources */,
 				623E90AD209620DF0021E825 /* BLNullEventCellView.m in Sources */,
@@ -558,10 +570,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos11.3;
 			};
 			name = Debug;
 		};
@@ -610,9 +622,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos11.3;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -621,6 +634,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CAFR2YRDFM;
 				INFOPLIST_FILE = BusyLife/Info.plist;
@@ -630,6 +644,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = bwts.BusyLife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -638,6 +653,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CAFR2YRDFM;
 				INFOPLIST_FILE = BusyLife/Info.plist;
@@ -647,6 +663,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = bwts.BusyLife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

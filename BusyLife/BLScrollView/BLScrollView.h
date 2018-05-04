@@ -45,7 +45,6 @@
 
 @property (nonatomic, strong) NSMutableArray* sectionViewArray;
 @property (nonatomic, assign) CGPoint velocity;
-
 @property (nonatomic, readonly) BOOL scrolling;
 
 //Similar to UITableView, when topCellInfo is changed or view size change is changed, call this method to reload data
