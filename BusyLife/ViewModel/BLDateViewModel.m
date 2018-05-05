@@ -32,12 +32,12 @@
     NSCalendar* calender = [NSCalendar currentCalendar];
     NSInteger day = [calender component:NSCalendarUnitDay fromDate:self.date];
     if (day != 1 || self.highlight) {
-        return [NSString stringWithFormat:@"%ld", day];
+        return [NSString stringWithFormat:@"%ld", (long)day];
     }
     else{
         NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"MMM";
-        return [NSString stringWithFormat:@"%@\n%ld", [formatter stringFromDate:self.date], day];
+        return [NSString stringWithFormat:@"%@\n%ld", [formatter stringFromDate:self.date], (long)day];
     }
 }
 

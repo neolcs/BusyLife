@@ -27,13 +27,16 @@
     if (self.event.range > 24*60*60) {
         return @"24h+";
     }
+    if (self.event.range < 60) {
+        return @"1m-";
+    }
     long hour = (long)(self.event.range) / 3600 ;
     long minute = (long)(self.event.range - hour * 3600)/ 60;
     NSMutableString* range = [NSMutableString string];
     if (hour > 0) {
         [range appendFormat:@"%ldh", hour];
         if (minute > 0) {
-            [range stringByAppendingString:@" "];
+            [range appendString:@" "];
         }
     }
     if (minute > 0) {

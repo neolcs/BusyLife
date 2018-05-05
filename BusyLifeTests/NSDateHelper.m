@@ -32,7 +32,7 @@
     
     NSDate* amDate = [NSDate dateWithTimeIntervalSince1970:1525133100];
     dayTime = [amDate dayTime];
-    XCTAssert([dayTime isEqualToString:@"08:05 AM"], @"day time for am error");
+    XCTAssert([dayTime isEqualToString:@"8:05 AM"], @"day time for am error");
 }
 
 - (void)testHeaderDisplay {

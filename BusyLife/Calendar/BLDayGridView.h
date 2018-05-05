@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BLDateViewModel.h"
+#import "BLBorderView.h"
 
-@interface BLDayGridView : UIView
+@interface BLDayGridView : BLBorderView
 
 @property (nonatomic, strong) BLDateViewModel* dateVM;
 

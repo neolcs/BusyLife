@@ -27,6 +27,7 @@
 
 //implement this method to return a CellView with the info from cellInfo
 - (UIView *)scrollView:(BLScrollView *)scrollView cellForInfo:(id)cellInfo;
+- (CGFloat)scrollView:(BLScrollView *)scrollView cellHeightForInfo:(id)cellInfo;
 
 @optional
 //return the header view for the cell info, optional to implement, if not implement, there would be no header

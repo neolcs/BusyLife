@@ -107,6 +107,8 @@
     NSMutableArray* cellArray = [NSMutableArray array];
     for (id cellInfo in sectionInfo.cellInfoArray){
         UIView* cell = [self.dataSource scrollView:self cellForInfo:cellInfo];
+        cell.width = self.width;
+        cell.height = [self.dataSource scrollView:self cellHeightForInfo:cellInfo];
         [sectionView addSubview:cell];
         [cellArray addObject:cell];
     }

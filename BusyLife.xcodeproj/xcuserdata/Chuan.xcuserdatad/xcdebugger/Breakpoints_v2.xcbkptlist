@@ -16,94 +16,77 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BusyLife/Weather/BLWeatherView.m"
-            timestampString = "547119648.064285"
+            filePath = "BusyLifeTests/BLEventViewModelTests.m"
+            timestampString = "547220075.485854"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "-displayWeatcherForDate:atLocation:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BusyLife/Weather/BLWeatherView.m"
-            timestampString = "547119648.064346"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "-displayWeatcherForDate:atLocation:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BusyLife/Weather/BLWeatherView.m"
-            timestampString = "547119648.064389"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
-            landmarkName = "-displayWeatcherForDate:atLocation:"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "-testTypeColor"
             landmarkType = "7">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__51-[BLWeatherView displayWeatcherForDate:atLocation:]_block_invoke"
-                  moduleName = "BusyLife"
+                  symbolName = "-[BLEventViewModelTests testTypeColor]"
+                  moduleName = "BusyLifeTests"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Chuan/Documents/WorkSpace/BusyLife/BusyLife/Weather/BLWeatherView.m"
-                  timestampString = "547119617.734356"
+                  urlString = "file:///Users/Chuan/Documents/WorkSpace/BusyLife/BusyLifeTests/BLEventViewModelTests.m"
+                  timestampString = "547218917.870641"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "70"
-                  endingLineNumber = "70"
-                  offsetFromSymbolStart = "1064">
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "151">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__51-[BLWeatherView displayWeatcherForDate:atLocation:]_block_invoke_2"
-                  moduleName = "BusyLife"
+                  symbolName = "-[BLEventViewModelTests testTypeColor]"
+                  moduleName = "BusyLifeTests"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Chuan/Documents/WorkSpace/BusyLife/BusyLife/Weather/BLWeatherView.m"
-                  timestampString = "547119617.737215"
+                  urlString = "file:///Users/Chuan/Documents/WorkSpace/BusyLife/BusyLifeTests/BLEventViewModelTests.m"
+                  timestampString = "547218917.872424"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "70"
-                  endingLineNumber = "70"
-                  offsetFromSymbolStart = "12">
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "756">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_"
-                  moduleName = "BusyLife"
+                  symbolName = "-[BLEventViewModelTests testTypeColor]"
+                  moduleName = "BusyLifeTests"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Chuan/Documents/WorkSpace/BusyLife/BusyLife/Weather/BLWeatherView.m"
-                  timestampString = "547119617.739904"
+                  urlString = "file:///Users/Chuan/Documents/WorkSpace/BusyLife/BusyLifeTests/BLEventViewModelTests.m"
+                  timestampString = "547218917.874135"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "70"
-                  endingLineNumber = "70"
-                  offsetFromSymbolStart = "12">
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "1448">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[BLEventViewModelTests testTypeColor]"
+                  moduleName = "BusyLifeTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Chuan/Documents/WorkSpace/BusyLife/BusyLifeTests/BLEventViewModelTests.m"
+                  timestampString = "547218917.875874"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "1557">
                </Location>
             </Locations>
          </BreakpointContent>

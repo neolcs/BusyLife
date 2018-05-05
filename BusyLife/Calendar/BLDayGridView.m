@@ -30,6 +30,9 @@
 - (instancetype)initWithDateVM:(BLDateViewModel*)dateVM{
     self = [super init];
     if (self) {
+        self.borderColor = [UIColor lightGrayColor];
+        self.borderWidth = 1.f;
+        
         _dateVM = dateVM;
         
         self.translatesAutoresizingMaskIntoConstraints = false;

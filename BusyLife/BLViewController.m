@@ -126,22 +126,16 @@
 - (UIView *)scrollView:(BLScrollView *)scrollView cellForInfo:(id)object{
     if ( scrollView == self.calendarView && [object isKindOfClass:[NSDate class]] ) {
         BLWeekCellView* cellView = [[BLWeekCellView alloc] initWithStartDate:object];
-        cellView.height = 40.f;
-        cellView.width = self.view.width;
         return cellView;
     }
     if ( scrollView == self.agendaView) {
         if ([object isKindOfClass:[BLEvent class]]) {
             BLEventViewModel* eventVM = [[BLEventViewModel alloc] initWithEvent:object];
             BLEventCellView* eventCellView = [[BLEventCellView alloc] initWithEvent:eventVM];
-            eventCellView.width = self.view.width;
-            eventCellView.height = 90.f;
             return eventCellView;
         }
         else if ([object isKindOfClass:[NSNull class]]) {
             BLNullEventCellView* nullEventCellView = [[BLNullEventCellView alloc] init];
-            nullEventCellView.width = self.view.width;
-            nullEventCellView.height = 30.f;
             return nullEventCellView;
         }
         else{
@@ -149,6 +143,24 @@
         }
     }
     return nil;
+}
+
+- (CGFloat)scrollView:(BLScrollView *)scrollView cellHeightForInfo:(id)cellInfo {
+    if ( scrollView == self.calendarView && [cellInfo isKindOfClass:[NSDate class]] ) {
+        return 40.f;
+    }
+    if ( scrollView == self.agendaView) {
+        if ([cellInfo isKindOfClass:[BLEvent class]]) {
+            return 90.f;
+        }
+        else if ([cellInfo isKindOfClass:[NSNull class]]) {
+            return 30.f;
+        }
+        else{
+            return 0.f;
+        }
+    }
+    return 0.f;
 }
 
 - (UIView *)scrollView:(BLScrollView *)scrollView headerForInfo:(id<BLSectionInfo>)sectionInfo{

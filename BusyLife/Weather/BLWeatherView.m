@@ -48,11 +48,11 @@
         self.iconView.image = [UIImage imageNamed:weather.icon];
     }
     else {
-        if ([date compare:[NSDate date]] == NSOrderedAscending) {
-            return;
-        }
+//        if ([date compare:[NSDate date]] == NSOrderedAscending) {
+//            return;
+//        }
         NSURLSession* session = [[BLDataProvider sharedInstance] session];
-        NSString* url = [NSString stringWithFormat:@"https://api.darksky.net/forecast/3147ce9f0b7992e57d6270ca9478efd4/%f,%f?exclude=[currently,minutely,hourly,alerts,flags]", location.latitude, location.longitude];
+        NSString* url = [NSString stringWithFormat:@"https://api.darksky.net/forecast/3147ce9f0b7992e57d6270ca9478efd4/%f,%f,%.f?exclude=[currently,minutely,hourly,alerts,flags]", location.latitude, location.longitude, [date timeIntervalSince1970]];
         
         __weak typeof(self) weakSelf = self;
         NSURLSessionDataTask* task = [session dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
