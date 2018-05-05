@@ -107,6 +107,9 @@
                 BLCalendarSetionInfo* sectionInfo = [[BLCalendarSetionInfo alloc] initWithDate:agendaSectionInfo.dateVM.date];
                 self.calendarView.topSectionInfo = sectionInfo;
             }
+            else {
+                [self.calendarView reloadData];
+            }
         }];
     }
 }
