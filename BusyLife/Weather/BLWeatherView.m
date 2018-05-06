@@ -43,14 +43,11 @@
 
 
 - (void)displayWeatcherForDate:(NSDate *)date atLocation:(BLLocation *)location {
-    BLWeather* weather = [[BLDataProvider sharedInstance] weatherForDate:date];
+    BLWeather* weather = [[BLDataProvider sharedInstance] weatherForDate:[date resetTo0]];
     if (weather) {
         self.iconView.image = [UIImage imageNamed:weather.icon];
     }
     else {
-//        if ([date compare:[NSDate date]] == NSOrderedAscending) {
-//            return;
-//        }
         NSURLSession* session = [[BLDataProvider sharedInstance] session];
         NSString* url = [NSString stringWithFormat:@"https://api.darksky.net/forecast/3147ce9f0b7992e57d6270ca9478efd4/%f,%f,%.f?exclude=[currently,minutely,hourly,alerts,flags]", location.latitude, location.longitude, [date timeIntervalSince1970]];
         
