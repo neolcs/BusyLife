@@ -25,6 +25,7 @@
 @property (nonatomic, strong) BLScrollView* calendarView;
 @property (nonatomic, strong) BLScrollView* agendaView;
 @property (nonatomic, strong) BLCalendarHeaderView* calendarHeaderView;
+@property (nonatomic, strong) UIButton* locateBtn;
 
 @property (nonatomic, strong) NSLayoutConstraint* foldLayout;
 @property (nonatomic, strong) NSLayoutConstraint* expandLayout;
@@ -32,6 +33,7 @@
 - (void)_currentDateVMChanged:(NSNotification *)notif;
 - (void)_addViews;
 - (void)_addConstraints;
+- (void)_locate:(UIButton *)btn;
 
 @end
 
@@ -182,6 +184,7 @@
     if ([notif.name isEqualToString:BLDayGridViewHighlight]
         && [notif.object isKindOfClass:[BLDateViewModel class]]) {
         BLDateViewModel* dateVM = (BLDateViewModel *)notif.object;
+        [BLDataProvider sharedInstance].currentDate = [dateVM.date resetTo0];
         
         BLAgendaSectionInfo* sectionInfo = [[BLAgendaSectionInfo alloc] initWithDateVM:dateVM];
         self.agendaView.topSectionInfo = sectionInfo;
@@ -221,6 +224,13 @@
     agendaView.topSectionInfo = [BLAgendaSectionInfo current];
     [self.view addSubview:agendaView];
     self.agendaView = agendaView;
+    
+    UIButton* locateBtn = [[UIButton alloc] init];
+    locateBtn.translatesAutoresizingMaskIntoConstraints = false;
+    [locateBtn setBackgroundImage:[UIImage imageNamed:@"locate"] forState:UIControlStateNormal];
+    [locateBtn addTarget:self action:@selector(_locate:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:locateBtn];
+    self.locateBtn = locateBtn;
 }
 
 - (void)_addConstraints {
@@ -240,7 +250,18 @@
     [self.agendaView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = true;
     [self.agendaView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = true;
     
+    [self.locateBtn.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-20.f].active = true;
+    [self.locateBtn.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-20.f].active = true;
+    [self.locateBtn.widthAnchor constraintEqualToConstant:30.f].active = true;
+    [self.locateBtn.heightAnchor constraintEqualToConstant:30.f].active = true;
+    
     self.foldLayout.active = true;
+}
+
+- (void)_locate:(UIButton *)btn{
+    BLDateViewModel* dateVM = [[BLDateViewModel alloc] initWithDate:[[NSDate date] resetTo0]];
+    NSNotification* notif = [NSNotification notificationWithName:BLDayGridViewHighlight object:dateVM];
+    [[NSNotificationCenter defaultCenter] postNotification:notif];
 }
 
 @end

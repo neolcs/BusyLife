@@ -95,10 +95,18 @@
             i = k + 1;
         }
         else {
+            if ([dateVM.date isEqual:self.currentDate]) {
+                dateVM.highlight = true;
+            }
             return dateVM;
         }
     }
-    return [self.dateVMArray objectAtIndex:i];
+    BLDateViewModel* dateVM = [self.dateVMArray objectAtIndex:i];
+    if ([dateVM.date isEqual:self.currentDate]) {
+        dateVM.highlight = true;
+    }
+    return dateVM;
+//    return [self.dateVMArray objectAtIndex:i];
 }
 
 - (BLWeather *)weatherForDate:(NSDate *)date {

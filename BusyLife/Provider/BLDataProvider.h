@@ -13,6 +13,7 @@
 @interface BLDataProvider : NSObject
 
 @property (nonatomic, readonly) NSURLSession* session;
+@property (nonatomic, strong) NSDate* currentDate;
 
 + (BLDataProvider *)sharedInstance;
 - (void)loadData;
