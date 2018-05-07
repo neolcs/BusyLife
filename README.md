@@ -6,7 +6,7 @@ This app aims to help people track their events. We provide 2 view ports, the Ca
 There are some scrollable classes in place, like UIScrollView, UITableView, UICollectionView, UIStackView, but none of them are designed to scroll infinitely. All of them need to set the contentSize one way or another beforehand, which is against nature of Agenda and Calendar View, we do not want to set a limit to our life range, that is why we introduce BLScrollView.
 
 ## BLScrollView
-| <img src="https://raw.githubusercontent.com/neolcs/BusyLife/master/chart/basic.png" width="400" title="Optional title"/> | <img src="https://raw.githubusercontent.com/neolcs/BusyLife/master/chart/scroll-create.png" width="400"/> | <img src="https://raw.githubusercontent.com/neolcs/BusyLife/master/chart/scroll-recycle.png" width="400"/> |
+| <img src="https://raw.githubusercontent.com/neolcs/BusyLife/master/chart/basic.png" width="400"/> | <img src="https://raw.githubusercontent.com/neolcs/BusyLife/master/chart/scroll-create.png" width="400"/> | <img src="https://raw.githubusercontent.com/neolcs/BusyLife/master/chart/scroll-recycle.png" width="400"/> |
 |:--:|:--:|:--:|
 | *initialize* |*create new section* |*recycle out-of-use section* |
 
@@ -80,7 +80,7 @@ The _BLScrollViewDelegate_ methods mostly explain itself already. We take use of
 
 The Calendar and Agenda will display user's event based on their local time, however event may involve with many people resident in different time zones. Even the same person, when he travels around the world, his local time may change from time to time. We need to find a way to map the event to different local time, we call it event settle logic.
 
-The ESL(event settle logic) is done in _BLDataProvider_, which is a singleton class. It has an event array and a dateVM array. The event array contains all the events for user. _BLDataProvider_ loads events from events.json file and parses it to _BLEvent_ object array. the startDate of _BLEvent_ is of UTC time, and has no relation with local time.
+The ESL(event settle logic) is done in _BLDataProvider_, which is a singleton class. It has an event array and a dateVM array, both array are time asc sorted. The event array contains all the events for user. _BLDataProvider_ loads events from events.json file and parses it to _BLEvent_ object array. the startDate of _BLEvent_ is of UTC time, and is independent with local time.
 ```Objective-C
 @interface BLEvent : NSObject
 
@@ -95,7 +95,11 @@ The ESL(event settle logic) is done in _BLDataProvider_, which is a singleton cl
 @end
 ```
 
-The _BLDateViewModel_ contains the date info and event array that settle in the date of local time. The dateVM array contains all the dateVM for recently visited date, and will preload the previous 31 days and next 31 days.
+The _BLDateViewModel_ contains a specific date of local time and events that settle in the date. The dateVM array contains all the dateVM for recently visited date, and will preload the previous 31 days and next 31 days.
+
+<img src="https://raw.githubusercontent.com/neolcs/BusyLife/readme/chart/datevm-settle.png" width="800"/>
+
+<img src="https://raw.githubusercontent.com/neolcs/BusyLife/readme/chart/datevm-settle-preload.png" width="800"/>
 
 
 
