@@ -119,6 +119,10 @@ The ESL(event settle logic) is done in _BLDataProvider_, which is a singleton cl
 
 The _BLDateViewModel_ contains a specific date of local time and events that settle in the date. The dateVM array contains all the dateVM for recently visited date, and will preload the previous 31 days and next 31 days.
 
+<img src="https://raw.githubusercontent.com/neolcs/BusyLife/readme/chart/datevm-settle.png" width="800"/>
+
+<img src="https://raw.githubusercontent.com/neolcs/BusyLife/readme/chart/datevm-settle-preload.png" width="800"/>
+
 ```Objective-C
 typedef void (^DateVMUpdateHandler)(void);
 
