@@ -11,7 +11,7 @@ There are some scrollable classes in place, like UIScrollView, UITableView, UICo
 | *initialize* |*create new section* |*recycle obsolete section* |
 
 
-The content of BLScrollView consists of a group of sections, here of the class _BLSectionView_. As the content will go inifinitely, it is not possible to index the sections with IndexPath, so instead of making an absoute index space, we define relative index space with _BLSectionInfo_ protocol
+The content of BLScrollView is consist of a group of sections, here of the class _BLSectionView_. As the content will go inifinitely, it is not possible to index the sections with IndexPath, so instead of making an absoute index space, we define relative index space with _BLSectionInfo_ protocol
 ```Objective-C
 @protocol BLSectionInfo<NSObject>
 
@@ -151,9 +151,12 @@ When the _(BLDateViewModel *)dateVMForDate:(NSDate *)date_ called again, DataPro
 
 <img src="https://raw.githubusercontent.com/neolcs/BusyLife/readme/chart/datevm-resettle.png" width="800"/>
 
-Sometimes, the target dates are out of the current range. In this scenario, the above preload logic could leads to inconsistency, so we will clear the dateVM array, and load the dateVM from scratch again. 
+Sometimes, the target date is out of the range of dateVM array. In this scenario, the above preload logic could lead to inconsistency, so we will clear the dateVM array, and load the dateVM from scratch again. 
 One important things here is, if we find the user's time zone get changed, the dateVM array will also get cleared, and reload again.
 
+## React and ViewModel
+
+There are many controls in the CalendarView and AgendaView, and the inter-actions between them is complex, it is hard to display and highlight the date imperatively. We use react style to manage the states.
 
 ```Objective-C
 @implementation BLDayGridView
@@ -215,7 +218,7 @@ It is also helpful to do the unit test with ViewModel, as we has abstract the lo
 
 ## Weather
 
-We introduce a class _BLWeatherView_, and wrap the Weather Request into itself to make a closure, we could put the _BLWeatherView_ whereever it need.
-For the weather data request, it would make sense to cache the weather results locally. We take use of NSSecureCoding to cache the weather result. All the weather dict is managed by _BLDataProvider_. 
+We introduce a class _BLWeatherView_, and wrap the Weather Request into it to make it a closure, we could put the _BLWeatherView_ whereever it need, and has no public dependency.
+For the weather data request, it would make sense to cache the weather result locally. We take use of NSSecureCoding to cache the weather result. All the weather dict is managed by _BLDataProvider_. 
 One thing to mention here is, a @synchronized lock is required to do the cache saving.
 
