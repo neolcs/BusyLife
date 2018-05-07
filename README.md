@@ -97,9 +97,40 @@ The ESL(event settle logic) is done in _BLDataProvider_, which is a singleton cl
 
 The _BLDateViewModel_ contains a specific date of local time and events that settle in the date. The dateVM array contains all the dateVM for recently visited date, and will preload the previous 31 days and next 31 days.
 
+```Objective-C
+typedef void (^DateVMUpdateHandler)(void);
+
+@interface BLDateViewModel : NSObject
+
+@property (nonatomic, strong) NSDate* date;
+@property (nonatomic, assign) BOOL highlight;
+@property (nonatomic, strong) NSArray* events;
+@property (nonatomic, copy) DateVMUpdateHandler updateHandler;
+@property (nonatomic, readonly) NSString* title;
+@property (nonatomic, readonly) int lineNumber;
+@property (nonatomic, readonly) UIColor* backColor;
+@property (nonatomic, readonly) UIColor* dayBackColor;
+@property (nonatomic, readonly) UIColor* dayTextColor;
+@property (nonatomic, readonly) NSString* headerTitle;
+@property (nonatomic, readonly) UIColor* headerTitleColor;
+
+- (instancetype)initWithDate:(NSDate *)date;
+
+@end
+```
+
 <img src="https://raw.githubusercontent.com/neolcs/BusyLife/readme/chart/datevm-settle.png" width="800"/>
 
+Initially, the dataVM array is empty. When calling _(BLDateViewModel *)dateVMForDate:(NSDate *)date_, DataProvider will populate the array with the target date as center, and preload a month before and a month after that date, then it will map the sorted dateVM array against the sorted event array, if any event settles in the date, add the event to the dateVM's events array.
+
 <img src="https://raw.githubusercontent.com/neolcs/BusyLife/readme/chart/datevm-settle-preload.png" width="800"/>
+
+When the _(BLDateViewModel *)dateVMForDate:(NSDate *)date_ called again, DataProvider will repeat to check if there are any date need to be preloaded. If so, preload these dates.
+
+<img src="https://raw.githubusercontent.com/neolcs/BusyLife/readme/chart/datevm-resettle.png" width="800"/>
+
+Sometimes, the target dates are out of the current range. In this scenario, the above preload logic could leads to inconsistency, so we will clear the dateVM array, and load the dateVM from scratch again. 
+One important things here is, if we find the user's time zone get changed, the dateVM array will also get cleared, and reload again.
 
 
 
