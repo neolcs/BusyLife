@@ -119,10 +119,6 @@ The ESL(event settle logic) is done in _BLDataProvider_, which is a singleton cl
 
 The _BLDateViewModel_ contains a specific date of local time and events that settle in the date. The dateVM array contains all the dateVM for recently visited date, and will preload the previous 31 days and next 31 days.
 
-<img src="https://raw.githubusercontent.com/neolcs/BusyLife/readme/chart/datevm-settle.png" width="800"/>
-
-<img src="https://raw.githubusercontent.com/neolcs/BusyLife/readme/chart/datevm-settle-preload.png" width="800"/>
-
 ```Objective-C
 typedef void (^DateVMUpdateHandler)(void);
 
@@ -155,28 +151,9 @@ When the _(BLDateViewModel *)dateVMForDate:(NSDate *)date_ called again, DataPro
 
 <img src="https://raw.githubusercontent.com/neolcs/BusyLife/readme/chart/datevm-resettle.png" width="800"/>
 
-Sometimes, the target date is out of the range of dateVM array. In this scenario, the above preload logic could lead to inconsistency, so we will clear the dateVM array, and load the dateVM from scratch again. One important things here is, if we find the user's time zone get changed, the dateVM array will get cleared, and reload again.
-```Objective-C
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        ...
+Sometimes, the target dates are out of the current range. In this scenario, the above preload logic could leads to inconsistency, so we will clear the dateVM array, and load the dateVM from scratch again. 
+One important things here is, if we find the user's time zone get changed, the dateVM array will also get cleared, and reload again.
 
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(_timezoneChanged:)
-                                                     name:NSSystemTimeZoneDidChangeNotification
-                                                   object:nil];
-    }
-    return self;
-}
-- (void)_timezoneChanged:(NSNotification *)notif{
-    [self.dateVMArray removeAllObjects];
-}
-```
-
-## React and ViewModel
-
-There are many controls in the CalendarView and AgendaView, and the inter-actions between them is complex, it is hard to display and highlight the date imperatively. We use react design to manage the states.
 
 ```Objective-C
 @implementation BLDayGridView
