@@ -11,7 +11,7 @@ There are some scrollable classes in place, like UIScrollView, UITableView, UICo
 | *initialize* |*create new section* |*recycle obsolete section* |
 
 
-The content of BLScrollView is consist of a group of sections, here of the class _BLSectionView_. As the content will go inifinitely, it is not possible to index the sections with IndexPath, so instead of making an absoute index space, we define relative index space with _BLSectionInfo_ protocol
+The content of BLScrollView consists of a group of sections, here of the class _BLSectionView_. As the content will go inifinitely, it is not possible to index the sections with IndexPath, so instead of making an absoute index space, we define relative index space with _BLSectionInfo_ protocol
 ```Objective-C
 @protocol BLSectionInfo<NSObject>
 
@@ -23,7 +23,7 @@ The content of BLScrollView is consist of a group of sections, here of the class
 @end
 ```
 
-We define specific class which conforms to _BLSectionInfo_ protocol for specific Section, like _BLCalendarSectionInfo_ for CalenderSection and _BLAgendaSectionInfo_ for AgendarSection, with which BLScrollView will populate the corresponding _BLSectionView_. _BLSectionView_ works as a container to help to manage the content views. As shown in the first chart, A BLSectionView could host an optional header and a group of cells. Initially, you need to set the bounds and topSectionInfo to a _BLScrollView_. During runtime, it will render the top section at first, and check if the sections have taken the whole height. If not, it will generate the next _BLSectionView_ by calling the _next_ method of the last SectionView's SectionInfo. The _BLScrollView_ will repeat this util the section views take all the height. 
+A specific class which conforms to _BLSectionInfo_ protocol would be declared for specific section, like _BLCalendarSectionInfo_ for CalenderSection and _BLAgendaSectionInfo_ for AgendarSection. With the section info BLScrollView will populate the corresponding _BLSectionView_. _BLSectionView_ works as a container to help to manage the content views. As shown in the first chart, A BLSectionView could host an optional header and a group of cells. Initially, you need to set the bounds and topSectionInfo to a _BLScrollView_. During runtime, it will render the top section at first, and check if the sections have taken the whole height. If not, it will generate the next _BLSectionView_ by calling the _next_ method of the last SectionView's sectionInfo. The _BLScrollView_ will repeat this util the section views take all the height. 
 
 When scrolling up, all the sections will translate to top, so there are new empty space created at the bottom. _BLScrollView_ will create new sections to take the height. If scrolling up to far, some top sections may go out of the bounds, as shown in the 3rd chart, _BLScrollView_ will recycle these obsolete sections.
 
