@@ -27,6 +27,7 @@
     
     self = [super init];
     if (self) {
+        
         self.borderColor = [UIColor lightGrayColor];
         self.borderWidth = 1.f;
         
