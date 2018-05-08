@@ -264,7 +264,6 @@
     NSMutableArray* toRemoveArray = [NSMutableArray array];
     for (BLSectionView* sectionView in self.sectionViewArray){
         sectionView.top = sectionView.top + point.y;
-        
         if (!CGRectIntersectsRect(self.bounds, sectionView.frame)) {
             [sectionView removeFromSuperview];
             [toRemoveArray addObject:sectionView];
