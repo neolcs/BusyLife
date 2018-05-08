@@ -11,7 +11,7 @@
 
 @interface BLEvent : NSObject
 
-@property (nonatomic, strong) NSDate* startDate;
+@property (nonatomic, strong) NSDate* startDate;        //UTC time
 @property (nonatomic, assign) NSTimeInterval range;
 @property (nonatomic, assign) int type;
 @property (nonatomic, strong) NSString* title;

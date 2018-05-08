@@ -81,6 +81,7 @@ typedef void (*objectSetter_t)(id, SEL, id);
 					NSMutableArray* eleArray = [NSMutableArray new];
                     NSArray* valueArray = [dict objectForKey:key];
 					for (int i = 0; i < [valueArray count]; ++i){
+                        //TODO: parseClass hard coded here, improve if will cover more scenario
 						id arrayElem = [self parseDict:[valueArray objectAtIndex:i] toClass:NSClassFromString(@"BLAttender")];
                         if (arrayElem) {
                             [eleArray addObject:arrayElem];
