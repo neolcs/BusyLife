@@ -11,7 +11,7 @@ There are some scrollable classes in place, like UIScrollView, UITableView, UICo
 | *initialize* |*create new section* |*recycle obsolete section* |
 
 
-The content of BLScrollView is consist of a group of sections, here of the class _BLSectionView_. As the content will go inifinitely, it is not possible to index the sections with IndexPath, so instead of making an absoute index space, we define relative index space with _BLSectionInfo_ protocol
+The content of BLScrollView consists of a group of sections, here of the class _BLSectionView_. As the content will go inifinitely, it is not possible to index the sections with IndexPath, so instead of making an absoute index space, we define relative index space with _BLSectionInfo_ protocol
 ```Objective-C
 @protocol BLSectionInfo<NSObject>
 
@@ -23,15 +23,15 @@ The content of BLScrollView is consist of a group of sections, here of the class
 @end
 ```
 
-We define specific class which conforms to _BLSectionInfo_ protocol for specific Section, like _BLCalendarSectionInfo_ for CalenderSection and _BLAgendaSectionInfo_ for AgendarSection, with which BLScrollView will populate the corresponding _BLSectionView_. _BLSectionView_ works as a container to help to manage the content views. As shown in the first chart, A BLSectionView could host an optional header and a group of cells. Initially, you need to set the bounds and topSectionInfo to a _BLScrollView_. During runtime, it will render the top section at first, and check if the sections have taken the whole height. If not, it will generate the next _BLSectionView_ by calling the _next_ method of the last SectionView's SectionInfo. The _BLScrollView_ will repeat this util the section views take all the height. 
+A specific class which conforms to _BLSectionInfo_ protocol would be declared for specific section, like _BLCalendarSectionInfo_ for CalenderSection and _BLAgendaSectionInfo_ for AgendarSection. With the section info BLScrollView will populate the corresponding _BLSectionView_. _BLSectionView_ works as a container to help to manage the content views. As shown in the first chart, A BLSectionView could host an optional header and a group of cells. Initially, you need to set the bounds and topSectionInfo to a _BLScrollView_. During runtime, it will render the top section at first, and check if the sections have taken the whole height. If not, it will generate the next _BLSectionView_ by calling the _next_ method of the last SectionView's sectionInfo. The _BLScrollView_ will repeat this util the section views take all the height. 
 
-When scrolling up, all the sections will translate to top, so there are new empty space created at the bottom. _BLScrollView_ will create new sections to take the height. If scrolling up to far, some top sections may go out of the bounds, as shown in the 3rd chart, _BLScrollView_ will recycle these sections.
+When scrolling up, all the sections will translate to top, so there are new empty space created at the bottom. _BLScrollView_ will create new sections to take the height. If scrolling up to far, some top sections may go out of the bounds, as shown in the 3rd chart, _BLScrollView_ will recycle these obsolete sections.
 
 The logic is similar when scrolling down.
 
 #### How to scroll 
 
-In _BLScrollView_ we interpret scrolling to that the content translate with the user's pan gestures. All the contentViews are located with its frames instead of constraints here.
+In _BLScrollView_ we interpret scrolling to that the content translates with the user's pan gesture. All the contentViews in _BLSectionView_ are located with its frames instead of constraints.
 
 ```Objective-C
 - (void)_translateView:(CGPoint)point{
@@ -48,15 +48,15 @@ In _BLScrollView_ we interpret scrolling to that the content translate with the 
     }
 }
 ```
-We add a UIPanGestureRecognizer to BLScrollView, and make use of the 2 key attributes in the PanGesture, _translation_ and _velocity_. In the PanGuesture event, we caculate how far the figure sweep away from _translation_, and translate the content section views up and down respectfully. 
+We add a UIPanGestureRecognizer to BLScrollView, and make use of the 2 key attributes of the PanGesture, _translation_ and _velocity_. In the PanGuesture event, we caculate how far the figure swipe away from _translation_, and move the content section views up and down respectfully. 
 ```Objective-C
 - (void)_panMe:(UIPanGestureRecognizer *)pan{
     ...
     [pan setTranslation:CGPointZero inView:self];
 }
 ```
-One important thing here is to reset the translation to zero everytime the event is called, to prevent the translation accumulates.
-If there is a significant _velocity_ when the PanGesture ends, the content should continure to move and slow down gradually, instead of stop immediately. We engage a timer source here to do the slow down job. In the timer source block, the _velocity_ will decrease slowly. When it is less than 1px/second, we will stop the timer and set the _velocity_ to zero. 
+One important thing here is to reset the translation to zero everytime the event is called, to prevent the translation accumulating.
+If there is a significant _velocity_ when the PanGesture ends, the content should continue to move and slow down gradually, instead of stoping immediately. We engage a timer source here to do the slow down job. In the timer source block, the _velocity_ will decrease slowly. When it is less than 1px/second, we will stop the timer and set the _velocity_ to zero. 
 
 #### How to populate the content
 
@@ -90,7 +90,7 @@ Like UITableView, _BLScrollView_ defines _BLScrollViewDataSource_ and _BLScrollV
 @end
 ```
 
-A _BLSectionInfo_ object contains an array of cellInfo, here in the dataSource delegate method, the value of the cellInfo is passed around, with which BLViewController could generate the cell views and define the cell's height. the header generation method is optional, we return nil to the CalendarView, and will return the BLAgendaHeader for the AgendaView.
+A _BLSectionInfo_ object contains an array of cellInfo, here in the dataSource delegate method, the value of the cellInfo is passed around, with which BLViewController generates the cell views, caculates the cell's height. The header generation method is optional, we return nil to the CalendarView section, and will return the BLAgendaHeader for the AgendaView section.
 
 The _BLScrollViewDelegate_ methods mostly explain itself already. We take use of the method to achieve the interaction between AgendaView and CalendarView.
 * The CalendarView fold and expand event is triggered in the _scrollViewDidStartScroll_ method;

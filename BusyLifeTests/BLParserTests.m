@@ -38,7 +38,7 @@
     [super tearDown];
 }
 
-- (void)testExample {
+- (void)testParser {
     NSDictionary* dict = [self.eventArray lastObject];
     BLEvent* event = [self.parser parseDict:dict toClass:NSClassFromString(@"BLEvent")];
     XCTAssert(event != nil, @"BLParser could not parse json");
