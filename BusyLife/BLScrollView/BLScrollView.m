@@ -95,6 +95,7 @@
         return sectionView;
     }
     sectionView = [[BLSectionView alloc] initWithFrame:CGRectZero];
+    sectionView.accessibilityIdentifier = @"sectionView";
     sectionView.sectionInfo = sectionInfo;
     if ([self.dataSource respondsToSelector:@selector(scrollView:headerForInfo:)]) {
         UIView* header = [self.dataSource scrollView:self headerForInfo:sectionInfo];

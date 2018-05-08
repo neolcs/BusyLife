@@ -32,9 +32,20 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // Use recording to get started writing UI tests.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)testSwipe {
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    
+    XCUIElement *calendarView = app.otherElements[@"calendarView"];
+    [calendarView swipeUp];
+    
+    NSUInteger calendarViewSectionNumber = [[[calendarView childrenMatchingType:XCUIElementTypeAny] matchingIdentifier:@"sectionView"] count];
+    XCTAssert( calendarViewSectionNumber >= 6 && calendarViewSectionNumber <= 7 , @"when expanding, sections in calendar view is not fully expanded");
+    
+    XCUIElement* agendarView = app.otherElements[@"agendaView"];
+    [agendarView swipeUp];
+    
+    calendarViewSectionNumber = [[[calendarView childrenMatchingType:XCUIElementTypeAny] matchingIdentifier:@"sectionView"] count];
+    XCTAssert( calendarViewSectionNumber >= 2 && calendarViewSectionNumber <= 3 , @"when folding, sections in calendar view is not correctly folded up");
 }
 
 @end

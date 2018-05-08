@@ -206,6 +206,7 @@
     self.calendarHeaderView = calendarHeaderView;
     
     BLScrollView* calendarView = [[BLScrollView alloc] init];
+    calendarView.accessibilityIdentifier = @"calendarView";
     calendarView.tag = 0;
     calendarView.translatesAutoresizingMaskIntoConstraints = false;
     [self.view addSubview:calendarView];
@@ -216,6 +217,7 @@
     self.calendarView = calendarView;
     
     BLScrollView* agendaView = [[BLScrollView alloc] init];
+    agendaView.accessibilityIdentifier = @"agendaView";
     agendaView.tag = 1;
     agendaView.translatesAutoresizingMaskIntoConstraints = false;
     agendaView.clipsToBounds = true;

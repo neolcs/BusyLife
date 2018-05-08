@@ -8,7 +8,7 @@ There are some scrollable classes in place, like UIScrollView, UITableView, UICo
 ## BLScrollView
 | <img src="https://raw.githubusercontent.com/neolcs/BusyLife/master/chart/basic.png" width="400"/> | <img src="https://raw.githubusercontent.com/neolcs/BusyLife/master/chart/scroll-create.png" width="400"/> | <img src="https://raw.githubusercontent.com/neolcs/BusyLife/master/chart/scroll-recycle.png" width="400"/> |
 |:--:|:--:|:--:|
-| *initialize* |*create new section* |*recycle out-of-use section* |
+| *initialize* |*create new section* |*recycle obsolete section* |
 
 
 The content of BLScrollView is consist of a group of sections, here of the class _BLSectionView_. As the content will go inifinitely, it is not possible to index the sections with IndexPath, so instead of making an absoute index space, we define relative index space with _BLSectionInfo_ protocol
