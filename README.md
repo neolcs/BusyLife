@@ -23,7 +23,7 @@ The content of BLScrollView is consist of a group of sections, here of the class
 @end
 ```
 
-A specific class which conforms to _BLSectionInfo_ protocol would be defined for specific section, like _BLCalendarSectionInfo_ for CalenderSection and _BLAgendaSectionInfo_ for AgendarSection. With the section info BLScrollView will populate the corresponding _BLSectionView_. _BLSectionView_ works as a container to help to manage the content views. As shown in the first chart, A BLSectionView could host an optional header and a group of cells. Initially, you need to set the bounds and topSectionInfo to a _BLScrollView_. During runtime, it will render the top section at first, and check if the sections have taken the whole height. If not, it will generate the next _BLSectionView_ by calling the _next_ method of the last SectionView's SectionInfo. The _BLScrollView_ will repeat this util the section views take all the height. 
+We define specific class which conforms to _BLSectionInfo_ protocol for specific Section, like _BLCalendarSectionInfo_ for CalenderSection and _BLAgendaSectionInfo_ for AgendarSection, with which BLScrollView will populate the corresponding _BLSectionView_. _BLSectionView_ works as a container to help to manage the content views. As shown in the first chart, A BLSectionView could host an optional header and a group of cells. Initially, you need to set the bounds and topSectionInfo to a _BLScrollView_. During runtime, it will render the top section at first, and check if the sections have taken the whole height. If not, it will generate the next _BLSectionView_ by calling the _next_ method of the last SectionView's SectionInfo. The _BLScrollView_ will repeat this util the section views take all the height. 
 
 When scrolling up, all the sections will translate to top, so there are new empty space created at the bottom. _BLScrollView_ will create new sections to take the height. If scrolling up to far, some top sections may go out of the bounds, as shown in the 3rd chart, _BLScrollView_ will recycle these obsolete sections.
 
@@ -151,12 +151,28 @@ When the _(BLDateViewModel *)dateVMForDate:(NSDate *)date_ called again, DataPro
 
 <img src="https://raw.githubusercontent.com/neolcs/BusyLife/readme/chart/datevm-resettle.png" width="800"/>
 
-Sometimes, the target date is out of the range of dateVM array. In this scenario, the above preload logic could lead to inconsistency, so we will clear the dateVM array, and load the dateVM from scratch again. 
-One important things here is, if we find the user's time zone get changed, the dateVM array will also get cleared, and reload again.
+Sometimes, the target date is out of the range of dateVM array. In this scenario, the above preload logic could lead to inconsistency, so we will clear the dateVM array, and load the dateVM from scratch again. One important things here is, if we find the user's time zone get changed, the dateVM array will get cleared, and reload again.
+```Objective-C
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        ...
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(_timezoneChanged:)
+                                                     name:NSSystemTimeZoneDidChangeNotification
+                                                   object:nil];
+    }
+    return self;
+}
+- (void)_timezoneChanged:(NSNotification *)notif{
+    [self.dateVMArray removeAllObjects];
+}
+```
 
 ## React and ViewModel
 
-There are many controls in the CalendarView and AgendaView, and the inter-actions between them is complex, it is hard to display and highlight the date imperatively. We use react style to manage the states.
+There are many controls in the CalendarView and AgendaView, and the inter-actions between them is complex, it is hard to display and highlight the date imperatively. We use react design to manage the states.
 
 ```Objective-C
 @implementation BLDayGridView
@@ -218,7 +234,7 @@ It is also helpful to do the unit test with ViewModel, as we has abstract the lo
 
 ## Weather
 
-We introduce a class _BLWeatherView_, and wrap the Weather Request into it to make it a closure, we could put the _BLWeatherView_ whereever it need, and has no public dependency.
-For the weather data request, it would make sense to cache the weather result locally. We take use of NSSecureCoding to cache the weather result. All the weather dict is managed by _BLDataProvider_. 
+We introduce a class _BLWeatherView_, and wrap the Weather Request into itself to make a closure, we could put the _BLWeatherView_ whereever it need.
+For the weather data request, it would make sense to cache the weather results locally. We take use of NSSecureCoding to cache the weather result. All the weather dict is managed by _BLDataProvider_. 
 One thing to mention here is, a @synchronized lock is required to do the cache saving.
 
