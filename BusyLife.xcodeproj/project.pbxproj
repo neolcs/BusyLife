@@ -13,7 +13,6 @@
 		6235C5712090BFEE007053AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6235C5702090BFEE007053AE /* Assets.xcassets */; };
 		6235C5742090BFEE007053AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6235C5722090BFEE007053AE /* LaunchScreen.storyboard */; };
 		6235C5772090BFEE007053AE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5762090BFEE007053AE /* main.m */; };
-		6235C5812090BFEE007053AE /* BusyLifeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C5802090BFEE007053AE /* BusyLifeTests.m */; };
 		6235C58C2090BFEE007053AE /* BusyLifeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C58B2090BFEE007053AE /* BusyLifeUITests.m */; };
 		6235C59C2090C049007053AE /* UIView+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C59B2090C049007053AE /* UIView+Common.m */; };
 		6235C5A22090CCBB007053AE /* BLScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6235C59E2090CCBB007053AE /* BLScrollView.m */; };
@@ -27,7 +26,7 @@
 		623E9084209438F30021E825 /* BLEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E9083209438F30021E825 /* BLEvent.m */; };
 		623E9087209439940021E825 /* BLAttender.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E9086209439940021E825 /* BLAttender.m */; };
 		623E908D209442800021E825 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E908C209442800021E825 /* NSDate+Helper.m */; };
-		623E908F2094450D0021E825 /* NSDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E908E2094450D0021E825 /* NSDateHelper.m */; };
+		623E908F2094450D0021E825 /* NSDateHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E908E2094450D0021E825 /* NSDateHelperTests.m */; };
 		623E9092209450870021E825 /* BLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E9091209450870021E825 /* BLParser.m */; };
 		623E9096209455C40021E825 /* BLParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E9095209455C40021E825 /* BLParserTests.m */; };
 		623E90A42094E3FD0021E825 /* BLEventCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 623E90A32094E3FD0021E825 /* BLEventCellView.m */; };
@@ -73,7 +72,6 @@
 		6235C5752090BFEE007053AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6235C5762090BFEE007053AE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6235C57C2090BFEE007053AE /* BusyLifeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BusyLifeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		6235C5802090BFEE007053AE /* BusyLifeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BusyLifeTests.m; sourceTree = "<group>"; };
 		6235C5822090BFEE007053AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6235C5872090BFEE007053AE /* BusyLifeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BusyLifeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6235C58B2090BFEE007053AE /* BusyLifeUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BusyLifeUITests.m; sourceTree = "<group>"; };
@@ -102,7 +100,7 @@
 		623E9086209439940021E825 /* BLAttender.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLAttender.m; sourceTree = "<group>"; };
 		623E908B209442800021E825 /* NSDate+Helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
 		623E908C209442800021E825 /* NSDate+Helper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
-		623E908E2094450D0021E825 /* NSDateHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSDateHelper.m; sourceTree = "<group>"; };
+		623E908E2094450D0021E825 /* NSDateHelperTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSDateHelperTests.m; sourceTree = "<group>"; };
 		623E9091209450870021E825 /* BLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLParser.m; sourceTree = "<group>"; };
 		623E9095209455C40021E825 /* BLParserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLParserTests.m; sourceTree = "<group>"; };
 		623E9097209455E30021E825 /* BLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLParser.h; sourceTree = "<group>"; };
@@ -202,9 +200,8 @@
 		6235C57F2090BFEE007053AE /* BusyLifeTests */ = {
 			isa = PBXGroup;
 			children = (
-				6235C5802090BFEE007053AE /* BusyLifeTests.m */,
 				6235C5822090BFEE007053AE /* Info.plist */,
-				623E908E2094450D0021E825 /* NSDateHelper.m */,
+				623E908E2094450D0021E825 /* NSDateHelperTests.m */,
 				623E9095209455C40021E825 /* BLParserTests.m */,
 				623E90BB209B0DDE0021E825 /* BLDateViewModelTests.m */,
 				62CF0284209DDD5F0048989E /* BLEventViewModelTests.m */,
@@ -487,8 +484,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				623E90BC209B0DDE0021E825 /* BLDateViewModelTests.m in Sources */,
-				623E908F2094450D0021E825 /* NSDateHelper.m in Sources */,
-				6235C5812090BFEE007053AE /* BusyLifeTests.m in Sources */,
+				623E908F2094450D0021E825 /* NSDateHelperTests.m in Sources */,
 				623E9096209455C40021E825 /* BLParserTests.m in Sources */,
 				62CF0285209DDD5F0048989E /* BLEventViewModelTests.m in Sources */,
 			);

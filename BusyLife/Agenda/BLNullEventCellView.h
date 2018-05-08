@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BLBorderView.h"
 
+//Place holder cell for date without events
 @interface BLNullEventCellView : BLBorderView
 
 @end

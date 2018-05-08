@@ -72,8 +72,8 @@
 }
 
 #pragma mark - BLScrollViewDelegate
+//CalendarView should fully display every cell of week. If not, adjust the offset to commit it.
 - (void)scrollViewDidStopScroll:(BLScrollView *)scrollView {
-    //CalendarView should fully display every cell of week. If not, adjust the offset to commit it.
     if (scrollView == self.calendarView) {
         BLSectionView* topSection = [scrollView.sectionViewArray objectAtIndex:0];
         if (topSection.fullExpanded) {
@@ -86,7 +86,7 @@
 }
 
 - (void)scrollViewDidStartScroll:(BLScrollView *)scrollView {
-    if (self.calendarView == scrollView) {
+    if (self.calendarView == scrollView) {      //expand calendar view
         self.foldLayout.active = false;
         self.expandLayout.active = true;
         
@@ -94,7 +94,7 @@
             [self.view layoutIfNeeded];
         }];
     }
-    if (self.agendaView == scrollView) {
+    if (self.agendaView == scrollView) {        //fold calendar view
         self.expandLayout.active = false;
         self.foldLayout.active = true;
         
@@ -258,6 +258,7 @@
     self.foldLayout.active = true;
 }
 
+//Go back to today
 - (void)_locate:(UIButton *)btn{
     BLDateViewModel* dateVM = [[BLDateViewModel alloc] initWithDate:[[NSDate date] resetTo0]];
     NSNotification* notif = [NSNotification notificationWithName:BLDayGridViewHighlight object:dateVM];
