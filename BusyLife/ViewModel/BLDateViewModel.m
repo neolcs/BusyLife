@@ -66,14 +66,14 @@
 
 - (NSString *)headerTitle {
     NSMutableString* title = [NSMutableString string];
-    if ([[self.date resetTo0] isEqual:[[NSDate date] resetTo0]]) {
+    if ([self.date isEqual:[[NSDate date] resetTo0]]) {
         [title appendString:@"TODAY \u2022 "];
     }
     return [title stringByAppendingString:[self.date headerDisplay]];
 }
 
 - (UIColor *)headerTitleColor {
-    if ([[self.date resetTo0] isEqual:[[NSDate date] resetTo0]]) {
+    if ([self.date isEqual:[[NSDate date] resetTo0]]) {
         return [UIColor blueColor];
     }
     return [UIColor lightGrayColor];

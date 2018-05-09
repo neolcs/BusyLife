@@ -84,7 +84,7 @@
         
         weakSelf.monthDay.textColor = weakSelf.dateVM.dayTextColor;
         
-        if ( !weakSelf.dateVM.highlight && [weakSelf.dateVM.date isSameDayWith:[NSDate date]]) {
+        if ( !weakSelf.dateVM.highlight && [weakSelf.dateVM.date isToday]) {
             weakSelf.monthDay.textColor = [UIColor blueColor];
         }
         weakSelf.dot.hidden = !([weakSelf.dateVM.events count] > 0) || weakSelf.dateVM.highlight || weakSelf.dateVM.lineNumber > 1;

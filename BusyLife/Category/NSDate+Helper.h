@@ -15,5 +15,6 @@
 - (NSString *)headerDisplay;
 - (NSString *)format;
 - (BOOL)isSameDayWith:(NSDate *)date;
+- (BOOL)isToday;
 
 @end

@@ -43,7 +43,8 @@
 
 
 - (void)displayWeatcherForDate:(NSDate *)date atLocation:(BLLocation *)location {
-    BLWeather* weather = [[BLDataProvider sharedInstance] weatherForDate:[date resetTo0]];
+    NSDate* roundDate = [date resetTo0];
+    BLWeather* weather = [[BLDataProvider sharedInstance] weatherForDate:roundDate];
     if (weather) {
         self.iconView.image = [UIImage imageNamed:weather.icon];
     }
@@ -63,7 +64,7 @@
                     BLWeather* weather = [parser parseDict:dict toClass:[BLWeather class]];
                     if (weather) {
                         [weatherArray addObject:weather];
-                        if ([weather.time isEqual:[date resetTo0]]) {
+                        if ([weather.time isEqual:roundDate]) {
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 weakSelf.iconView.image = [UIImage imageNamed:weather.icon];
                             });
