@@ -184,7 +184,8 @@
     if ([notif.name isEqualToString:BLDayGridViewHighlight]
         && [notif.object isKindOfClass:[BLDateViewModel class]]) {
         BLDateViewModel* dateVM = (BLDateViewModel *)notif.object;
-        [BLDataProvider sharedInstance].currentDate = [dateVM.date resetTo0];
+        
+        [BLDataProvider sharedInstance].currentDateVM = dateVM;
         
         BLAgendaSectionInfo* sectionInfo = [[BLAgendaSectionInfo alloc] initWithDateVM:dateVM];
         self.agendaView.topSectionInfo = sectionInfo;

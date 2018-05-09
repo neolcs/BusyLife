@@ -12,8 +12,14 @@
 
 - (NSDate *)resetTo0{
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"YYYY-MM-dd";
+    formatter.dateFormat = @"yyyy-MM-dd";
     return [formatter dateFromString:[formatter stringFromDate:self]];
+}
+
+- (BOOL)isSameDayWith:(NSDate *)date {
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    return [[formatter stringFromDate:self] isEqualToString:[formatter stringFromDate:date]];
 }
 
 - (NSString *)dayTime{

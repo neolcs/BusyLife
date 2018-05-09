@@ -13,7 +13,8 @@
 @interface BLDataProvider : NSObject
 
 @property (nonatomic, readonly) NSURLSession* session;
-@property (nonatomic, strong) NSDate* currentDate;
+//@property (nonatomic, strong) NSDate* currentDate;
+@property (nonatomic, strong) BLDateViewModel* currentDateVM;
 
 + (BLDataProvider *)sharedInstance;
 - (void)loadData;
@@ -23,6 +24,9 @@
 //search for the target VM from Array first, if not found, then expand the current ViewModel ArrayList cover the date.
 //Currently, the dateVM array will increase infinitely, we will need to control the size later, maybe at the size of 365
 - (BLDateViewModel *)dateVMForDate:(NSDate *)date;
+
+
+//Weather data read and cache
 - (BLWeather *)weatherForDate:(NSDate *)date;
 - (void)saveWeather:(BLWeather *)weather;
 - (void)saveWeatherArray:(NSArray *)weather;

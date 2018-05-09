@@ -70,18 +70,21 @@
             }
         }
     }
+    
+    BLDateViewModel* dateVM = [self dateVMForDate:[NSDate date]];
+    self.currentDateVM = dateVM;
 }
 
-- (BLDateViewModel *)dateVMForDate:(NSDate *)rawDate {
+- (BLDateViewModel *)_biSearchDateVMForDate:(NSDate *)rawDate{
     NSDate* date = [rawDate resetTo0];
     if ([self.dateVMArray count] <= 0) {
-        [self _fillDateVMWithDate:date];
+        return nil;
     }
     if ([date compare:[(BLDateViewModel*)[self.dateVMArray objectAtIndex:0] date]] == NSOrderedAscending
-         || [date compare:[(BLDateViewModel*)[self.dateVMArray lastObject] date]] == NSOrderedDescending) {
-        [self _fillDateVMWithDate:date];
+        || [date compare:[(BLDateViewModel*)[self.dateVMArray lastObject] date]] == NSOrderedDescending) {
+        return nil;
     }
-    
+   
     int i = 0;
     int j = (int)([self.dateVMArray count] - 1);
     while (i < j) {
@@ -95,18 +98,39 @@
             i = k + 1;
         }
         else {
-            if ([dateVM.date isEqual:self.currentDate]) {
+            if ([dateVM.date isEqual:self.currentDateVM.date]) {
                 dateVM.highlight = true;
             }
             return dateVM;
         }
     }
     BLDateViewModel* dateVM = [self.dateVMArray objectAtIndex:i];
-    if ([dateVM.date isEqual:self.currentDate]) {
-        dateVM.highlight = true;
-    }
     return dateVM;
-//    return [self.dateVMArray objectAtIndex:i];
+}
+
+- (BLDateViewModel *)dateVMForDate:(NSDate *)rawDate {
+    NSDate* date = [rawDate resetTo0];
+    if ([self.dateVMArray count] <= 0) {
+        [self _fillDateVMWithDate:date];
+    }
+    if ([date compare:[(BLDateViewModel*)[self.dateVMArray objectAtIndex:0] date]] == NSOrderedAscending
+         || [date compare:[(BLDateViewModel*)[self.dateVMArray lastObject] date]] == NSOrderedDescending) {
+        [self _fillDateVMWithDate:date];
+    }
+    
+    return [self _biSearchDateVMForDate:date];
+}
+
+- (void)setCurrentDateVM:(BLDateViewModel *)newDateVM {
+    BLDateViewModel* dateVM = [self _biSearchDateVMForDate:newDateVM.date];
+    if (nil == dateVM) {
+        dateVM = newDateVM;
+    }
+    if ( _currentDateVM != nil && ![_currentDateVM.date isSameDayWith:dateVM.date]) {
+        _currentDateVM.highlight = false;
+    }
+    _currentDateVM = dateVM;
+    dateVM.highlight = true;
 }
 
 - (BLWeather *)weatherForDate:(NSDate *)date {

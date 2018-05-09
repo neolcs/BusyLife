@@ -8,7 +8,8 @@
 
 #import "BLDayGridView.h"
 #import "UIView+Common.h"
-
+#import "BLDataProvider.h"
+#import "NSDate+Helper.h"
 
 @interface BLDayGridView()
 
@@ -80,7 +81,12 @@
         weakSelf.backgroundColor = weakSelf.dateVM.backColor;
         
         weakSelf.monthDay.backgroundColor = weakSelf.dateVM.dayBackColor;
+        
         weakSelf.monthDay.textColor = weakSelf.dateVM.dayTextColor;
+        
+        if ( !weakSelf.dateVM.highlight && [weakSelf.dateVM.date isSameDayWith:[NSDate date]]) {
+            weakSelf.monthDay.textColor = [UIColor blueColor];
+        }
         weakSelf.dot.hidden = !([weakSelf.dateVM.events count] > 0) || weakSelf.dateVM.highlight || weakSelf.dateVM.lineNumber > 1;
         
         weakSelf.accessibilityIdentifier = weakSelf.dateVM.highlight ? @"DG Highlight" : @"DG UnHighlight";
@@ -98,6 +104,7 @@
 - (void)_tapMe:(UITapGestureRecognizer *)tap{
     NSNotification* notif = [NSNotification notificationWithName:BLDayGridViewHighlight object:self.dateVM];
     [[NSNotificationCenter defaultCenter] postNotification:notif];
+//    [BLDataProvider sharedInstance].currentDateVM = self.dateVM;
 }
 
 - (void)layoutSubviews {

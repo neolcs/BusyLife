@@ -21,9 +21,9 @@
     self = [super init];
     if (self) {
         _date = date;
-        _highlight = [[date resetTo0] isEqual:[[NSDate date] resetTo0]];
+//        _highlight = [[date resetTo0] isEqual:[[NSDate date] resetTo0]];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_highlightChanged:) name:BLDayGridViewHighlight object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_highlightChanged:) name:BLDayGridViewHighlight object:nil];
     }
     return self;
 }
@@ -96,9 +96,9 @@
     return [self.date isEqual:another.date];
 }
 
-- (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
+//- (void)dealloc{
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//}
 
 #pragma mark - Private Method
 - (void)_highlightChanged:(NSNotification *)notif{
