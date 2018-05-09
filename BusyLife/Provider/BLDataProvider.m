@@ -20,7 +20,7 @@
 - (NSDictionary *)_readCachedWeather;
 - (void)_saveWeatherToCache:(NSDictionary *)dict;
 - (NSString *)_cacheFilePath;
-- (void)_fillDateVMWithDate:(NSDate *)date;
+- (void)_fillDateVMWithRoundDate:(NSDate *)date;
 - (void)_timezoneChanged:(NSNotification *)notif;
 
 @end
@@ -111,11 +111,11 @@
 - (BLDateViewModel *)dateVMForDate:(NSDate *)rawDate {
     NSDate* date = [rawDate resetTo0];
     if ([self.dateVMArray count] <= 0) {
-        [self _fillDateVMWithDate:date];
+        [self _fillDateVMWithRoundDate:date];
     }
     if ([date compare:[(BLDateViewModel*)[self.dateVMArray objectAtIndex:0] date]] == NSOrderedAscending
          || [date compare:[(BLDateViewModel*)[self.dateVMArray lastObject] date]] == NSOrderedDescending) {
-        [self _fillDateVMWithDate:date];
+        [self _fillDateVMWithRoundDate:date];
     }
     
     return [self _biSearchDateVMForDate:date];
@@ -172,9 +172,9 @@
 }
 
 #pragma mark - Private Method
-- (void)_fillDateVMWithDate:(NSDate *)date {
-    NSDate* monthBefore = [[date dateByAddingTimeInterval:-31*24*60*60] resetTo0];
-    NSDate* monthAfter = [[date dateByAddingTimeInterval:31*24*60*60] resetTo0];
+- (void)_fillDateVMWithRoundDate:(NSDate *)date {
+    NSDate* monthBefore = [date dateByAddingTimeInterval:-31*24*60*60];
+    NSDate* monthAfter = [date dateByAddingTimeInterval:31*24*60*60];
     
     if ([self.dateVMArray count] > 0) {
         if ([monthBefore compare:[[self.dateVMArray lastObject] date]] == NSOrderedDescending
@@ -185,7 +185,7 @@
 
     NSDate* middleBefore = monthAfter;
     if ([self.dateVMArray count] > 0) {
-        middleBefore = [[[self.dateVMArray objectAtIndex:0] date] resetTo0];
+        middleBefore = [[self.dateVMArray objectAtIndex:0] date];
     }
     
     middleBefore = [middleBefore dateByAddingTimeInterval:-24*60*60];
@@ -213,7 +213,7 @@
         middleBefore = [middleBefore dateByAddingTimeInterval:-24*60*60];
     }
     
-    NSDate* middleAfter = [[[self.dateVMArray lastObject] date] resetTo0];
+    NSDate* middleAfter = [[self.dateVMArray lastObject] date];
     middleAfter = [middleAfter dateByAddingTimeInterval:24*60*60];
     int j = 0;
     while ([middleAfter compare:monthAfter] != NSOrderedDescending) {
