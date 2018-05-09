@@ -23,6 +23,12 @@
     NSDate* resetDate52 = [date52 resetTo0];
     XCTAssert([resetDate51 isEqual:standardDate], @"reset to start of day, not work correctlly");
     XCTAssert(![resetDate52 isEqual:standardDate], @"reset to start of day, not work correctlly");
+    
+//    NSDate* dec29 = [NSDate dateWithTimeIntervalSince1970:1577548800];
+//    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+//    formatter.dateFormat = @"yyyy-MM-dd";
+//    NSString* formatted = [formatter stringFromDate:dec29];
+//    NSDate* resetDec29 = [formatter dateFromString:formatted];
 }
 
 - (void)testDayTime{
