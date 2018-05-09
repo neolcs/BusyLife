@@ -11,15 +11,19 @@
 @implementation NSDate (Helper)
 
 - (NSDate *)resetTo0{
-    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"yyyy-MM-dd";
-    return [formatter dateFromString:[formatter stringFromDate:self]];
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    NSDateComponents* comps = [calendar components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:self];
+    return [calendar dateFromComponents:comps];
 }
 
 - (BOOL)isSameDayWith:(NSDate *)date {
-    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"yyyy-MM-dd";
-    return [[formatter stringFromDate:self] isEqualToString:[formatter stringFromDate:date]];
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    return [calendar isDate:self inSameDayAsDate:date];
+}
+
+- (BOOL)isToday {
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    return [calendar isDateInToday:self];
 }
 
 - (NSString *)dayTime{
