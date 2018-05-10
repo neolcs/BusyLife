@@ -204,7 +204,7 @@ There are many controls in the CalendarView and AgendaView, and the inter-action
     if (self) {
         // Initialize....
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_highlightChanged:) name:BLDayGridViewHighlight object:nil];
+        ~~[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_highlightChanged:) name:BLDayGridViewHighlight object:nil];~~
     }
     return self;
 }
@@ -226,9 +226,26 @@ There are many controls in the CalendarView and AgendaView, and the inter-action
     }
 }
 @end
+
+@implement BLDataProvider 
+- (void)setCurrentDateVM:(BLDateViewModel *)newDateVM {
+    BLDateViewModel* dateVM = [self _biSearchDateVMForDate:newDateVM.date];
+    if (nil == dateVM) {
+        dateVM = newDateVM;
+    }
+    if ( _currentDateVM != nil && ![_currentDateVM.date isSameDayWith:dateVM.date]) {
+        _currentDateVM.highlight = false;
+    }
+    _currentDateVM = dateVM;
+    dateVM.highlight = true;
+}
+@end 
 ```
 
-There is an updateHandler block in _BLDateViewModel_, the block is set in the corresponding _BLDayGridView_. In CalendarView, when user tap on different date cell, a notification is sent out, every dateVM will receive the notificate and update its highlight state, then updateHandler is called and the _BLDayGridView_ is updated.
+There is an updateHandler block in _BLDateViewModel_, the block is set in the corresponding _BLDayGridView_. 
+~~In CalendarView, when user tap on different date cell, a notification is sent out, every dateVM will receive the notificate and update its highlight state, then updateHandler is called and the _BLDayGridView_ is updated.~~
+
+The above logic is obsolete as it will register every ViewModel to respond with the notification. Instead, we add a _currentDateVM_ in DataProvider. When you tap a DayGrid, a notification still sent out, the BLViewController will be the only listener. It will update the _currentDateVM_ of BLDataProvider, in the setter method, the dateVM's updateHandler take over to update the DayGrid's status.
 
 It is also helpful to do the unit test with ViewModel, as we has abstract the logic code into ViewModel. The Views and Models would be more pure now.
 
