@@ -31,7 +31,11 @@
 - (void)_enqueueSection:(BLSectionView *)cell;
 
 - (void)_panMe:(UIPanGestureRecognizer *)pan;
-- (void)_translateView:(CGPoint)point;
+
+//It will make the performance much better to deal with header and non-header sections seperately.
+//We shall find a better way to tackle it together
+- (void)_translateViewWithHeader:(CGPoint)point;
+- (void)_translateViewWithoutHeader:(CGPoint)point;
 
 - (void)_scrollStarted;
 - (void)_scrollStopped;
@@ -95,6 +99,7 @@
         return sectionView;
     }
     sectionView = [[BLSectionView alloc] initWithFrame:CGRectZero];
+    sectionView.width = self.width;
     sectionView.accessibilityIdentifier = @"sectionView";
     sectionView.sectionInfo = sectionInfo;
     if ([self.dataSource respondsToSelector:@selector(scrollView:headerForInfo:)]) {
@@ -118,7 +123,8 @@
         [sectionView bringSubviewToFront:sectionView.header];
     }
     
-    [sectionView accomodateInSize:CGSizeMake(0, 10000)];
+    [sectionView renderCells];
+    
     return sectionView;
 }
 
@@ -159,7 +165,7 @@
         if (self.autoScroll) {
             if (self.targetOffset.y * self.velocity.y > 0) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self _translateView:self.velocity];
+                    self.hasHeader ? [self _translateViewWithHeader:self.velocity] : [self _translateViewWithoutHeader:self.velocity];
                     self.targetOffset = CGPointMake(0, self.targetOffset.y - self.velocity.y);
                 });
             }
@@ -176,13 +182,11 @@
             }
             else{
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self _translateView:self.velocity];
+                    self.hasHeader ? [self _translateViewWithHeader:self.velocity] : [self _translateViewWithoutHeader:self.velocity];
                 });
                 self.velocity = CGPointMake(self.velocity.x, self.velocity.y / 1.05);
             }
         }
-        
-//        NSLog(@"decelerate, velocity x:%.2f, y:%.2f", self.velocity.x, self.velocity.y);
     });
 }
 
@@ -218,7 +222,12 @@
     
     if ([self.sectionViewArray count] > 0) {
         BLSectionView* topSectionView = [self.sectionViewArray objectAtIndex:0];
-        sectionView.frame = CGRectMake(0, 0, self.width, topSectionView.top);
+        if (topSectionView.header) {
+            sectionView.frame = CGRectMake(0, 0, self.width, topSectionView.top);
+        }
+        else {
+            sectionView.bottom = topSectionView.top;
+        }
     }
     [self addSubview:sectionView];
     [self.sectionViewArray insertObject:sectionView atIndex:0];
@@ -235,7 +244,12 @@
     
     CGPoint point = CGPointMake(floor(rawPoint.x), floor(rawPoint.y));
     CGPoint velocity = CGPointMake(floor(rawVelocity.x), floor(rawVelocity.y));
-    [self _translateView:point];
+    if (self.hasHeader) {
+        [self _translateViewWithHeader:point];
+    }
+    else {
+        [self _translateViewWithoutHeader:point];
+    }
     
     if (pan.state == UIGestureRecognizerStateEnded) {
         CGFloat vy = floor(sqrt(fabs(velocity.y)));
@@ -257,7 +271,52 @@
     [pan setTranslation:CGPointZero inView:self];
 }
 
-- (void)_translateView:(CGPoint)point{
+- (void)_translateViewWithoutHeader:(CGPoint)point{
+    if ([self.sectionViewArray count] <= 0) {
+        return;
+    }
+    
+    NSMutableArray* toRemoveArray = [NSMutableArray array];
+    for (BLSectionView* sectionView in self.sectionViewArray){
+        sectionView.top = sectionView.top + point.y;
+        
+        if (!CGRectIntersectsRect(self.bounds, sectionView.frame)) {
+            [sectionView removeFromSuperview];
+            [toRemoveArray addObject:sectionView];
+        }
+    }
+    [self.sectionViewArray removeObjectsInArray:toRemoveArray];
+    if ([self.delegate respondsToSelector:@selector(scrollView:sectionWillBeRemoved:)]) {
+        for (BLSectionView* sectionView in toRemoveArray){
+            [self.delegate scrollView:self sectionWillBeRemoved:sectionView.sectionInfo];
+        }
+    }
+    
+    BLSectionView* topSection = [self.sectionViewArray objectAtIndex:0];
+    while (topSection.top > 0) {
+        topSection = [self sectionViewFor:[topSection.sectionInfo previous]];
+        [self _enqueueSection:topSection];
+    }
+    
+    BLSectionView* lastSection = [self.sectionViewArray lastObject];
+    while (lastSection.bottom < self.height){
+        lastSection = [self sectionViewFor:[lastSection.sectionInfo next]];
+        [self _pushSection:lastSection];
+    }
+    
+    if ([self.sectionViewArray count] > 0) {
+        BLSectionView* sectionView = [self.sectionViewArray objectAtIndex:0];
+        if (![_topSectionInfo isEqual:sectionView.sectionInfo]) {
+            _topSectionInfo = sectionView.sectionInfo;
+            
+            if ([self.delegate respondsToSelector:@selector(scrollView:topSectionChanged:)]) {
+                [self.delegate scrollView:self topSectionChanged:self.topSectionInfo];
+            }
+        }
+    }
+}
+
+- (void)_translateViewWithHeader:(CGPoint)point{
     if ([self.sectionViewArray count] <= 0) {
         return;
     }

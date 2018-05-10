@@ -23,12 +23,16 @@
     NSDate* resetDate52 = [date52 resetTo0];
     XCTAssert([resetDate51 isEqual:standardDate], @"reset to start of day, not work correctlly");
     XCTAssert(![resetDate52 isEqual:standardDate], @"reset to start of day, not work correctlly");
-    
-//    NSDate* dec29 = [NSDate dateWithTimeIntervalSince1970:1577548800];
-//    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-//    formatter.dateFormat = @"yyyy-MM-dd";
-//    NSString* formatted = [formatter stringFromDate:dec29];
-//    NSDate* resetDec29 = [formatter dateFromString:formatted];
+}
+
+- (void)testIsSameDay {
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    NSDate* feb2 = [formatter dateFromString:@"2016-02-02 01:01:01"];
+    NSDate* feb2_ = [formatter dateFromString:@"2016-02-02 23:23:23"];
+    XCTAssert([feb2 isSameDayWith:feb2_], @"feb 2 sameday check failed");
+    NSDate* feb1 = [formatter dateFromString:@"2016-02-01 23:59:59"];
+    XCTAssert(![feb2 isSameDayWith:feb1], @"Feb 1st is not same day as Feb 2nd");
 }
 
 - (void)testDayTime{
