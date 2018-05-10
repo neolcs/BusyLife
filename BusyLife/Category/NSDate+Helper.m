@@ -40,7 +40,7 @@
 
 - (NSString *)format{
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"YYYY-MM-dd";
+    formatter.dateFormat = @"yyyy-MM-dd";
     return [formatter stringFromDate:self];
 }
 

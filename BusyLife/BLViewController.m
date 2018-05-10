@@ -76,11 +76,8 @@
 - (void)scrollViewDidStopScroll:(BLScrollView *)scrollView {
     if (scrollView == self.calendarView) {
         BLSectionView* topSection = [scrollView.sectionViewArray objectAtIndex:0];
-        if (topSection.fullExpanded) {
-            return;
-        }
         
-        CGFloat distance = topSection.height < topSection.fullHeight - topSection.height ? -topSection.height :  (topSection.fullHeight - topSection.height);
+        CGFloat distance = fabs(topSection.top) < topSection.height/2.f - topSection.height ? -topSection.top :  -topSection.bottom;
         [scrollView scrollOffset:CGPointMake(0, distance) animated:true];
     }
 }
@@ -207,6 +204,7 @@
     self.calendarHeaderView = calendarHeaderView;
     
     BLScrollView* calendarView = [[BLScrollView alloc] init];
+    calendarView.hasHeader = false;
     calendarView.accessibilityIdentifier = @"calendarView";
     calendarView.tag = 0;
     calendarView.translatesAutoresizingMaskIntoConstraints = false;
@@ -218,6 +216,7 @@
     self.calendarView = calendarView;
     
     BLScrollView* agendaView = [[BLScrollView alloc] init];
+    agendaView.hasHeader = true;
     agendaView.accessibilityIdentifier = @"agendaView";
     agendaView.tag = 1;
     agendaView.translatesAutoresizingMaskIntoConstraints = false;

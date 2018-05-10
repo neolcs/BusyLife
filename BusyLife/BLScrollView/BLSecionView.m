@@ -24,8 +24,20 @@
     return self;
 }
 
+- (void)renderCells {
+    CGFloat start = 0.f;
+    if (self.header) {
+        start = self.header.bottom;
+    }
+    
+    for (UIView* cell in self.cellArray){
+        cell.top = start;
+        start += cell.height;
+    }
+    self.height = start;
+}
+
 - (void)accomodateInSize:(CGSize)size {
-    CGFloat width = size.width;
     CGFloat height = size.height;
     
     CGFloat cellHeight = 0.f;
@@ -41,17 +53,16 @@
         self.header.bottom = self.height;
     }
     
-    width = MAX(self.header.width, width);
-    
     if (height >= headerHeight + cellHeight) {
         CGFloat start = self.header.bottom;
         for (UIView* cell in self.cellArray){
             cell.top = start;
             start += cell.height;
             
-            width = MAX(cell.width, width);
         }
         height = headerHeight + cellHeight;
+        
+        _fullExpanded = true;           // set if fully expanded by side
     }
     else {
         CGFloat bottom = self.height;
@@ -59,33 +70,12 @@
             UIView* cell = [self.cellArray objectAtIndex:i];
             cell.bottom = bottom;
             bottom -= cell.height;
-            
-            width = MAX(cell.width, width);
         }
+        _fullExpanded = false;          // set if fully expanded by side
     }
     
-    self.width = width;
+    self.width = self.width;
     self.height = height;
-}
-
-- (BOOL)fullExpanded {
-    CGFloat cellHeight = 0.f;
-    for (UIView* cell in self.cellArray){
-        cellHeight += cell.height;
-    }
-    CGFloat headerHeight = self.header.height;
-    
-    return self.height >= cellHeight + headerHeight;
-}
-
-- (CGFloat)fullHeight {
-    CGFloat cellHeight = 0.f;
-    for (UIView* cell in self.cellArray){
-        cellHeight += cell.height;
-    }
-    CGFloat headerHeight = self.header.height;
-    
-    return cellHeight + headerHeight;
 }
 
 @end
