@@ -38,11 +38,16 @@
 }
 
 - (void)accomodate {
-    if (self.height + self.top > self.header.height) {
-        self.header.top = -self.top;
+    if (self.top < 0) {
+        if (self.height + self.top > self.header.height) {
+            self.header.top = -self.top;
+        }
+        else {
+            self.header.bottom = self.height;
+        }
     }
     else {
-        self.header.bottom = self.height;
+        self.header.top = 0.f;
     }
 }
 
