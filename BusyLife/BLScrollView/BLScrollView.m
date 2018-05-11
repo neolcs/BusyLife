@@ -27,15 +27,11 @@
 - (void)_resumeTimer;
 - (void)_suspendTimer;
 
-//- (void)_pushSection:(BLSectionView *)cell;
-//- (void)_enqueueSection:(BLSectionView *)cell;
-
 - (void)_panMe:(UIPanGestureRecognizer *)pan;
 
 //It will make the performance much better to deal with header and non-header sections seperately.
 //We shall find a better way to tackle it together
 - (void)_translateView:(CGPoint)point;
-//- (void)_translateViewWithoutHeader:(CGPoint)point;
 
 - (void)_scrollStarted;
 - (void)_scrollStopped;
@@ -208,19 +204,6 @@
     self.isDecelerating = NO;
     dispatch_suspend(self.timer);
 }
-
-#pragma mark - Cell Management
-//- (void)_pushSection:(BLSectionView *)sectionView {
-//    if (!sectionView) return;
-//    [self addSubview:sectionView];
-//    [self.sectionViewArray addObject:sectionView];
-//}
-//
-//- (void)_enqueueSection:(BLSectionView *)sectionView {
-//    if (!sectionView) return;
-//    [self addSubview:sectionView];
-//    [self.sectionViewArray insertObject:sectionView atIndex:0];
-//}
 
 #pragma mark - Pan Guesture Event Handler
 - (void)_panMe:(UIPanGestureRecognizer *)pan{
