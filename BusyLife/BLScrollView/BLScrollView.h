@@ -49,9 +49,6 @@
 @property (nonatomic, assign) CGPoint velocity;
 @property (nonatomic, readonly) BOOL scrolling;
 
-//We add a header flag here, because it would be much cpu usage to deal with header position.
-@property (nonatomic, assign) BOOL hasHeader;
-
 //Similar to UITableView, when topCellInfo is changed or view size change is changed, call this method to reload data
 - (void)reloadData;
 - (BLSectionView *)sectionViewFor:(id<BLSectionInfo>)sectionInfo;
