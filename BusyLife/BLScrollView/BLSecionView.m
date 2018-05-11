@@ -37,45 +37,13 @@
     self.height = start;
 }
 
-- (void)accomodateInSize:(CGSize)size {
-    CGFloat height = size.height;
-    
-    CGFloat cellHeight = 0.f;
-    for (UIView* cell in self.cellArray){
-        cellHeight += cell.height;
-    }
-    CGFloat headerHeight = self.header.height;
-    
-    if (height > headerHeight) {
-        self.header.top = 0.f;
+- (void)accomodate {
+    if (self.height + self.top > self.header.height) {
+        self.header.top = -self.top;
     }
     else {
         self.header.bottom = self.height;
     }
-    
-    if (height >= headerHeight + cellHeight) {
-        CGFloat start = self.header.bottom;
-        for (UIView* cell in self.cellArray){
-            cell.top = start;
-            start += cell.height;
-            
-        }
-        height = headerHeight + cellHeight;
-        
-        _fullExpanded = true;           // set if fully expanded by side
-    }
-    else {
-        CGFloat bottom = self.height;
-        for (NSInteger i = [self.cellArray count] - 1; i >= 0; --i) {
-            UIView* cell = [self.cellArray objectAtIndex:i];
-            cell.bottom = bottom;
-            bottom -= cell.height;
-        }
-        _fullExpanded = false;          // set if fully expanded by side
-    }
-    
-    self.width = self.width;
-    self.height = height;
 }
 
 @end

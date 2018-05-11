@@ -15,11 +15,10 @@
 @property (nonatomic, strong) UIView* header;
 @property (nonatomic, strong) NSArray* cellArray;
 @property (nonatomic, strong) id<BLSectionInfo> sectionInfo;
-@property (nonatomic, readonly) BOOL fullExpanded;
 
 
 //reorganize the cells and header with respect to the size
-- (void)accomodateInSize:(CGSize)size;
+- (void)accomodate;
 - (void)renderCells;
 
 @end
